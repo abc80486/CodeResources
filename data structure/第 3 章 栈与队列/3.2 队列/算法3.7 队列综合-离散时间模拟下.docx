@@ -1,0 +1,56 @@
+typedef struct{
+    int OccurTime;
+    int NType;
+}Event,ElemType;
+
+typedef LinkList EventList;
+
+typedef struct{
+    int ArrivalTime;
+    int Duration;
+}QElemType;
+EventList ev;
+Event en;
+LinkQueue q[5];
+QElemType customer;
+int TotalTime,CustomerNum;
+
+int cmp(Event a,Event b);
+
+void OpenForDay(){
+    TotalTime=0;CustomerNum=0;
+    InitList(ev);
+    en.OccurTime=0;en.NType=0;
+    OrderInsert(ev,en,cmp);
+    for(i=1;i<=4;i++) InitQueue(q[i]);
+    
+}
+void CustomerArrived(){
+    ++CustomerNum;
+    Random(durtime,intertime);
+    t=en.OccurTime + intertime;
+    if(t<CloseTime) OrderInsert(ev,(t,0),cmp);
+    i=Mininum(q);
+    EnQueue(q[i],(en.OccurTime,durtime));
+    if(QueueLength(q[i])==1){
+        OrderInsert(ev,(en.OccurTime+durtime,i),cmp);
+    }
+}
+void CustomerDeparture(){
+    i=en.NType;DelQueue(q[i],customer);
+    TotalTime += en.OccurTime-customer.ArrivalTime;
+    if(!QueueEmpty(q[i])){
+        GetHead(q[i],customer);
+        OrderInsert(ev,(en.OccurTime+curtomer.Duration,i),(*cmp)());
+    }
+}
+void Bank_Simulation(int CloseTime){
+    OpenForDay();
+    while(!ListEmpty(ev)){
+        DelFirst(GetHead(ev),p);en=GetCurElem(p);
+        if(en.NType==0)
+            CustomerArrived();
+        else CustomerDeparture();
+    }
+    printf("The Average Time is %f\n)
+}

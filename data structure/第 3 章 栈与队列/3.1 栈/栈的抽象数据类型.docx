@@ -1,0 +1,22 @@
+ADT Stack{
+    数据对象：D={ai|ai<-Elenset,i=1,2,...,n,n>=0}
+    数据关系：R1={<a(i-1),ai>|a(i-1),ai<-D,i=1,2,...,n}
+    基本操作：
+    InitStack(&S)   //操作结果：构造一个空栈S。
+
+    DestroyStack(&S) //初始条件：栈S已经存在。操作结果：栈S被销毁。
+
+    ClearStack(&S)
+
+    StackEmpty(S)
+
+    StackLength(S)
+
+    GetTop(S,&e)
+
+    Push(&S,e)
+
+    Pop(&S,&e)
+
+    StackTraverse(S,visit())
+}
