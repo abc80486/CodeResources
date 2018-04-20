@@ -54,3 +54,15 @@ int Locate(IdxListType &idxlist,HString wd,Boolean &b){
     if(m==0){b=TRUE;return i;}
     else{b=False;return i+1;}
 }
+void InsertNewKey(int i,StrType wd){
+    for(j=idxlist.last-1;j>=i;--j)
+        idxlist.item[j+1]=idxlist.item[j];
+    StrCopy(idxlist.item[i].key,wd);
+    InitList(idxlist.item[i].bnolist);
+    ++idxlist.last;
+}
+Status InsertBook(IdxListType &idxlist,int i,int bno){
+    if(!MakeNode(p,bno)) return ERROR;
+    Appand(idxlist.item[i].bnolist,p);
+    return OK;
+}

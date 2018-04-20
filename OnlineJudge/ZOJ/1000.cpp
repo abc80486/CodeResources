@@ -94,12 +94,12 @@ void GreatnumAdd(char *s1, char *s2, char *s3) {
 	return;
 }
 
-void main() {
+int main() {
 	int  b;
 	char str1[100], str2[100], str3[100];
 		cin >> str1 >> str2;
 		GreatnumAdd(str1, str2, str3);
 		cout << str3 << endl;
-		
+		return 0;
 	
 }
