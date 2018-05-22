@@ -1,0 +1,12 @@
+git remote add origin https://github.com/abc80486/data-structure.git
+	git push -u origin master
+	git remote add origin https://github.com/abc80486/data-structure.git
+	git push origin master
+  	git clone https://github.com/abc80486/testgit.git
+	  
+	cd  d://CodeResoures
+		git add .
+		git commit -m "MacBook"
+		git push
+		git status
+	  
