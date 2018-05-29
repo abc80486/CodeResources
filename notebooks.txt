@@ -5,8 +5,8 @@ git remote add origin https://github.com/abc80486/data-structure.git
   	git clone https://github.com/abc80486/testgit.git
 	  
 	cd  d://CodeResoures
-		git add .
-		git commit -m "MacBook"
-		git push
-		git status
+git add .
+git commit -m "MacBook"
+git push
+git status
 	  
