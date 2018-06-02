@@ -17,5 +17,7 @@ int main(){
     int a[100]={0};
     read_list(a);
     for(int i=0;i<10;i++) cout<<a[i]<<ends;
+    while(1);
     return 0;
+    
 }
