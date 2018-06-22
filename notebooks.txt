@@ -5,10 +5,8 @@ git remote add origin https://github.com/abc80486/data-structure.git
   	git clone https://github.com/abc80486/testgit.git
 	ssh-keygen -t rsa -C "youremail@example.com"
 	  
-	cd  d://CodeResoures
-git add .
-git commit -m "MacBook"
-git push
-git status
-	  
-	  176
+	git add .
+	git commit -m "Mac"
+	git push
+	git status
+
