@@ -8,7 +8,7 @@ git remote add origin https://github.com/abc80486/data-structure.git
 	git config --global user.name "xiangbin" 
 	git config --global user.email "abc80486@163.com"
 	git config --global credential.helper wincred
-12
+
 
 
 	git add .
