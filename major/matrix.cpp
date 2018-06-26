@@ -10,7 +10,7 @@ void zero(int n,int m){
         if(a[m][m]!=0){
         k=-a[i][m]/a[m][m];
         for(int j=m;j<=n;j++){
-            a[i][j]+=a[m][j]*k;
+            a[i][j]+=a[m][m]*k;
         }
         }
     }
