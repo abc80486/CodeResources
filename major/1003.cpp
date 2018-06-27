@@ -9,26 +9,29 @@ const int N=10;
 using namespace std;
  double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],u1=1.06,a[N],b[N];
 void show2(int n,double (*a)[N]){
-    for(int i=1;i<n;i++){
-        for(int j=1;j<n;j++){
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
             printf("%lf ",a[i][j]);
         }
         cout<<endl;
     }
 }
 void show1(int n,double *a){
-    for(int j=1;j<n;j++){
+    for(int j=1;j<=n;j++){
             printf("%lf ",a[j]);
      }
     cout<<endl;
 }
 
 void inputdata(int *n,int *m,double(*g)[N],double(*b)[N]){
+    ifstream fin("gb.txt");
     int i,j;
     double y,u;
-    scanf("%d%d",n,m);
-    while(scanf("%d,%d",&i,&j)==2 && i!=0 && j!=0){
-        scanf("%lf%lf",&y,&u);
+    //scanf("%d%d",n,m);
+    fin>>*n>>*m;
+    while(fin>>i>>j&& i!=0 && j!=0){
+       // scanf("%lf%lf",&y,&u);
+       fin>>y>>u;
         g[i][i]+=y/(y*y+u*u);
         g[j][j]+=y/(y*y+u*u);
         g[j][i]=g[i][j]=-y/(y*y+u*u);
@@ -37,19 +40,19 @@ void inputdata(int *n,int *m,double(*g)[N],double(*b)[N]){
         b[j][j]+=-u/(y*y+u*u);
         b[j][i]=b[i][j]=u/(y*y+u*u);
        // cout<<b[i][j]<<endl;
-        if(i>j) *n=i;
-        else *n=j;
+        
     }
 }
 void input( int n, int m,double *e,double *f,double *p0,double *q0){
+    ifstream fin("efpq.txt");
     int k=m+n+1;
-    while(k--){
-        scanf("%lf%lf",&e[k+1],&f[k+1]);}
-    while(n--){
-        scanf("%lf%lf",&p0[n+1],&q0[n+1]);}
+    for(int i=1;i<=n+m+1;i++){
+        fin>>e[i]>>f[i];}
+    for(int i=1;i<=n;i++){
+        fin>>p0[i]>>q0[i];}
     
 }
-void acquirepq(int n,int m,double *lp,double *lq){
+void acquirepqab(int n,int m,double *lp,double *lq,double *a,double *b){
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n+m+1;j++){
      lp[i]+=e[i]*(G[i][j]*e[j]-B[i][j]*f[j])+f[i]*(G[i][j]*f[j]+B[i][j]*e[j]);
@@ -57,16 +60,12 @@ void acquirepq(int n,int m,double *lp,double *lq){
         }
     }
     for(int i=1;i<=n;i++){
+        a[i]=(lp[i]*e[i]+(-lq[i])*(-f[i]))/(e[i]*e[i]+f[i]*f[i]);
+        b[i]=((-lq[i])*e[i]-lp[i]*(-f[i]))/(e[i]*e[i]+f[i]*f[i]);
        lp[i]=P[i]-lp[i];lq[i]=Q[i]-lq[i];
     }
 }
-void acquireab(int n,double *a,double *b){
-    for(int i=1;i<=n;i++){
-        a[i]=(P[i]*e[i]+(-Q[i])*(-f[i]))/(e[i]*e[i]+f[i]*f[i]);
-        b[i]=((-Q[i])*e[i]-P[i]*(-f[i]))/(e[i]*e[i]+f[i]*f[i]);
-    }
 
-}
 void acquireJ(int n,double (*H)[N],double (*N1)[N],double (*J)[N],double (*L)[N]){
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
@@ -103,14 +102,47 @@ void acquirejmat(int n,double (*jj)[2*N],double (*H)[N],double (*N1)[N],double (
 
 }
 int main(){
-    double lp[N],lq[N],a[N],b[N];
-    int n,m,s;
-    //inputdata(&n,&m,G,B);
+    double lp[N],lq[N];
+    double h[N][N],n1[N][N],j[N][N],l[N][N];
+    double jj[2*N][2*N];
+    double pq[2*N];
+    int n,m,s,k=1;
+    inputdata(&n,&m,G,B);
     input(n,m,e,f,P,Q);
+    acquirepqab(n,m,lp,lq,a,b);
+    acquireJ(n,h,n1,j,l);
+    //acquireab(n,a,b);
+    acquirejmat(n,jj,h,n1,j,l);
+    for(int i=1;i<=n;i++){
+        pq[k++]=lp[i];
+        pq[k++]=lq[i];
+    }
     s=n+m+1;
     show1(s,e);
-    cout<<endl;
     show1(s,f);
+    cout<<endl;
+    show2(s,G);
+    cout<<endl;
+    show2(s,B);
+    cout<<endl;
+    show1(n,P);
+    show1(n,Q);
+    cout<<endl;
+    show1(n,lp);
+    show1(n,lq);
+    cout<<endl;
+    show1(n,a);
+    show1(n,b);
+    cout<<endl;
+    show2(n,h);
+    cout<<endl;
+    //show2(2*n,jj);
+    for(int i=1;i<=2*n;i++){
+        for(int j=1;j<=2*n;j++){
+            printf("%lf ",jj[i][j]);
+        }
+        cout<<endl;
+    }
     return 0;
 }
 
