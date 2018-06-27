@@ -1,6 +1,7 @@
 {
     "python.linting.pylintEnabled": false,
     "files.associations": {
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "fstream": "cpp"
     }
 }

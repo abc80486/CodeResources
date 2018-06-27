@@ -2,7 +2,7 @@
 #include<cstdio>
 using namespace std;
 const int N=20;
-double a[N][N]={0};
+double a[N][N];
 /*
 void zero(int n,int m){
     double k;

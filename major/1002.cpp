@@ -92,16 +92,13 @@ bool matrixnubmul(int n,double b,double(*a)[N]){
     return true;
 }
 bool matrixmul(double (*p)[N],double *y,int a,int b,int c){
-    //int k=1;
     double s=0,r[a];
     for(int i=1;i<=a;i++){
             s=0.0;
             for(int j=1;j<=b;j++){
                 s+=p[i][j]*y[j];
-                //cout<<s<<ends;
             }
             r[i]=s;
-            
     }
     for(int i=1;i<=a;i++){
         printf("%lf  ",r[i]);
