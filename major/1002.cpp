@@ -1,22 +1,24 @@
 #include<cstdio>
 #include<iostream>
+#include<fstream>
 const int N=20;
+#define double long double
 //double a[20][20];
 using namespace std;
 bool inversematrix(double (*s)[N],int n);
-  void zeroline(int j,int i,int n,double(*a)[N]);
+    void zeroline(int j,int i,int n,double(*a)[N]);
 double determinant(int m,int n,double(*a)[N]);
   bool abjustzero(int set,int end,double(*a)[N]);
 bool matrixch(int n,double(*a)[N]);
 bool matrixnubmul(int n,double b,double(*a)[N]);
-bool matrixmul(double (*p)[N],double (*y)[N],int a,int b,int c);
+bool matrixmul(double (*p)[N],double (*y)[N],int a,int b,double *r);
 double pc(const int n,int h,int k,double(*a)[N]);
 void ax(int n,double(*a)[N]);
 
 void show(int n,double(*p)[N]){
      for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
-            printf("%lf ",p[i][j]);
+            cout<<p[i][j];
         }
         cout<<endl;
     }
@@ -91,8 +93,8 @@ bool matrixnubmul(int n,double b,double(*a)[N]){
     }
     return true;
 }
-bool matrixmul(double (*p)[N],double *y,int a,int b,int c){
-    double s=0,r[a];
+bool matrixmul(double (*p)[N],double *y,int a,int b,double *r){
+    double s=0.0;
     for(int i=1;i<=a;i++){
             s=0.0;
             for(int j=1;j<=b;j++){
@@ -101,8 +103,8 @@ bool matrixmul(double (*p)[N],double *y,int a,int b,int c){
             r[i]=s;
     }
     for(int i=1;i<=a;i++){
-        printf("%lf  ",r[i]);
-        cout<<endl;
+       // printf("%lf  ",r[i]);
+        //cout<<endl;
     } 
     return true;
 }
@@ -115,14 +117,14 @@ bool matrixmul(double (*p)[N],double *y,int a,int b,int c){
      }
      k=determinant(1,n,p);
      //show(n,p);
-     cout<<k<<endl;
+     //cout<<k<<endl;
      if(k!=0.0){
          //matrixch(n,s);
         // show(n,s);
         ax(n,s);
         //show(n,s);
          matrixnubmul(n,1.0/k,s);
-         show(n,s);
+         //show(n,s);
      }
      else 
      {return false;}
@@ -136,29 +138,16 @@ bool matrixmul(double (*p)[N],double *y,int a,int b,int c){
      return true;
  }
  
-int main(){
-    int n;
-    double a[N][N];
-    double u[N];
-    cin>>n;
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=n;j++){
-            scanf("%lf",&a[i][j]);
-        }
-    }
-    cout<<endl;
-    for(int i=1;i<=n;i++){
-            scanf("%lf",&u[i]);
-        
-    }
+
+bool output(int n,double(*a)[N],double *u,double *out){
     if(!inversematrix(a,n)) {
-        cout<<"error!";
+        //cout<<"error!";
+        return false;
     }
     else {
-        matrixmul(a,u,n,n,1);
+        matrixmul(a,u,n,n,out);
     }
-    //show(n,a);
-    return 0;
+    return true;
 }
 double pc(const int n,int h,int k,double(*a)[N]){
     double s[N][N];
@@ -199,4 +188,30 @@ void ax(int n,double(*a)[N]){
              a[i][j]=t[i][j];
          }
      }
+}
+
+int main(){
+    ifstream fin("jz.txt");
+    int n;
+    double a[N][N];
+    double u[N];
+    double out[N];
+    
+    fin>>n;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            fin>>a[i][j];
+        }
+    }
+    //cout<<endl;
+    for(int i=1;i<=n;i++){
+         fin>>u[i];
+        
+    }
+    output(n,a,u,out);
+    for(int i=1;i<=n;i++){
+        cout<<out[i]<<endl;
+    }
+    //show(n,out);
+    return 0;
 }

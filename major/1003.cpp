@@ -1,13 +1,13 @@
 #include<iostream>
 #include<cstdio>
-#include<cstring>
+//#include<cstring>
 #include<fstream>
-#include<math.h>
+//#include<math.h>
 
 const int N=10;
 //#define M 100
 using namespace std;
- double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],u1=1.06,a[N],b[N];
+double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],u1=1.06,a[N],b[N];
 void show2(int n,double (*a)[N]){
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
@@ -84,7 +84,7 @@ void acquireJ(int n,double (*H)[N],double (*N1)[N],double (*J)[N],double (*L)[N]
      }
     }
 }
-void acquirejmat(int n,double (*jj)[2*N],double (*H)[N],double (*N1)[N],double (*J)[N],double (*L)[N]){
+void acquirejmat(int n,double (*jj)[N],double (*H)[N],double (*N1)[N],double (*J)[N],double (*L)[N]){
     int k=1,p=1;
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
@@ -104,11 +104,12 @@ void acquirejmat(int n,double (*jj)[2*N],double (*H)[N],double (*N1)[N],double (
 int main(){
     double lp[N],lq[N];
     double h[N][N],n1[N][N],j[N][N],l[N][N];
-    double jj[2*N][2*N];
-    double pq[2*N];
+    double jj[N][N];
+    double pq[N];
     int n,m,s,k=1;
     inputdata(&n,&m,G,B);
     input(n,m,e,f,P,Q);
+
     acquirepqab(n,m,lp,lq,a,b);
     acquireJ(n,h,n1,j,l);
     //acquireab(n,a,b);
@@ -118,28 +119,12 @@ int main(){
         pq[k++]=lq[i];
     }
     s=n+m+1;
-    show1(s,e);
-    show1(s,f);
-    cout<<endl;
-    show2(s,G);
-    cout<<endl;
-    show2(s,B);
-    cout<<endl;
-    show1(n,P);
-    show1(n,Q);
-    cout<<endl;
-    show1(n,lp);
-    show1(n,lq);
-    cout<<endl;
-    show1(n,a);
-    show1(n,b);
-    cout<<endl;
-    show2(n,h);
-    cout<<endl;
-    //show2(2*n,jj);
+    //show1(s,e);show1(s,f);show2(s,G);show2(s,B);show1(n,P);show1(n,Q);
+    //show1(n,lp);show1(n,lq);show1(n,a);show1(n,b);show2(n,h);
+    show2(2*n,jj);
     for(int i=1;i<=2*n;i++){
         for(int j=1;j<=2*n;j++){
-            printf("%lf ",jj[i][j]);
+            //printf("%lf ",jj[i][j]);
         }
         cout<<endl;
     }
