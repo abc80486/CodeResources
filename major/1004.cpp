@@ -3,7 +3,7 @@
 #include<fstream>
 #include<algorithm>
 const int N=20;
-#define double long double
+//#define double long double
 //#define lf 
 //long double op[20][20];
 using namespace std;
@@ -19,8 +19,9 @@ void ax(int n,double(*a)[N]);
 bool output(int n,double(*a)[N],double *u,double *out);
 double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],u1=1.06,a[N],b[N];
 double le[N],lf[N],lp[N],lq[N];
-double h[N][N],n1[N][N],j1[N][N],l[N][N];
-    //double jj[N][N];
+double h[N][N],n1[N][N],j1[N][N],l[N][N],pq[N];
+//ofstream fout("out.txt");
+double jj[N][N];
 void show(int n,double(*p)[N]){
      for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
@@ -183,17 +184,23 @@ void ax(int n,double(*a)[N]){
 }
 //double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],u1=1.06,a[N],b[N];
 void show2(int n,double (*a)[N]){
+    ofstream fout("out.txt");
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
-            printf("%llf ",a[i][j]);
+            printf("%lf ",a[i][j]);
+            fout<<a[i][j];
         }
+        fout<<endl<<endl;
         cout<<endl<<endl;
     }
 }
 void show1(int n,double *a){
+    ofstream fout("out.txt");
     for(int j=1;j<=n;j++){
-            printf("%llf ",a[j]);
+            printf("%lf ",a[j]);
+            fout<<a[j];
      }
+    fout<<endl<<endl;
     cout<<endl<<endl;
 }
 
@@ -226,7 +233,7 @@ void input( int n, int m,double *e,double *f,double *p0,double *q0){
         fin>>p0[i]>>q0[i];}
     
 }
-void acquirepqab(int n,int m,double *pq){
+void acquirepqab(int n,int m){
     int k=1;
     for(int i;i<=n;i++){
         lp[i]=0.0;lq[i]=0.0;
@@ -251,10 +258,10 @@ void acquireJ(int n,double (*H)[N],double (*N1)[N],double (*J)[N],double (*L)[N]
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
             if(i==j){
-                H[i][j]=-B[i][j]*e[i]+G[i][j]*f[i]+b[i];
+                H[i][j]=(0.0-B[i][j])*e[i]+G[i][j]*f[i]+b[i];
                  N1[i][j]=G[i][j]*e[i]+B[i][i]*f[i]+a[i];
-                 J[i][j]=-G[i][j]*e[i]+B[i][j]*f[i]+a[i];
-                L[i][j]=-B[i][j]*e[i]+G[i][j]*f[i]-b[i];
+                 J[i][j]=(0.0-G[i][j])*e[i]+B[i][j]*f[i]+a[i];
+                L[i][j]=(0.0-B[i][j])*e[i]+G[i][j]*f[i]-b[i];
             }
             else{
                 H[i][j]=-B[i][j]*e[i]+G[i][j]*f[i];
@@ -285,26 +292,37 @@ void acquirejmat(int n,double (*jj)[N],double (*H)[N],double (*N1)[N],double (*J
 int main(){
     //double lp[N],lq[N];
    // double h[N][N],n1[N][N],j1[N][N],l[N][N];
-    double jj[N][N];
-    double pq[N];
+    //ofstream fout("out.xt");
+    //double jj[N][N];
     double out[N]={0.0};
     int n,m,s,k=0,c=1;;
-    double *er,*ew;
+   // double *er,*ew;
     inputdata(&n,&m,G,B);
     input(n,m,e,f,P,Q);
     s=n+m+1;
     do
     {
-    
-    acquirepqab(n,m,pq);
+    printf("第 %d 次迭代\n",k);
+    acquirepqab(n,m);
     acquireJ(n,h,n1,j1,l);
     acquirejmat(n,jj,h,n1,j1,l);
-    show2(2*n,jj);
-    if(output(2*n,jj,pq,out)){
-        c=1;
-
-        
-        printf("第 %d 次迭代\n",k);
+    //show2(2*n,jj);  
+    show1(n,e);
+    output(2*n,jj,pq,out);
+    c=1;
+    for(int i=1;i<=n;i++){
+        lf[i]=out[c++];
+        le[i]=out[c++];
+     }
+     //show1(n,)
+    for(int i=1;i<=n;i++){
+        e[i]+=le[i];
+        f[i]+=lf[i];
+    }
+    k++;
+      }
+   while(k<=15);
+       /*
         //cout<<"迭代过程中各节点的不平衡量："<<endl;
         for(int i=1;i<=n;i++){
             //cout<<lp[i]<<"+j"<<lq[i]<<"  ";
@@ -312,13 +330,10 @@ int main(){
         cout<<endl<<endl;
         
         //show2()
-        for(int i=1;i<=n;i++){
-            lf[i]=out[c++];
-            le[i]=out[c++];
-        }
+        
         //cout<<"迭代过程中各节点电压修正量："<<endl;
         for(int i=1;i<=n;i++){
-            //cout<<le[i]<<"+j"<<lf[i]<<" ";
+           // cout<<le[i]<<"+j"<<lf[i]<<" ";
         }
        // cout<<endl<<endl<<"迭代过程中节点电压："<<endl;
         for(int i=1;i<=n;i++){
@@ -329,21 +344,14 @@ int main(){
             //cout<<h[i][i]<<"  "<<l[i][i]<<"  "<<ends;
         }
         cout<<endl<<endl;
-        for(int i=1;i<=n;i++){
-            e[i]+=le[i];f[i]+=lf[i];}
-    }
-    else{
-        cout<<"ERROR"<<endl;
-        return 0;
-    }
+        */
+        
     //show1(n,e);
-    er=max_element(out+1,out+2*n);
-    ew=min_element(out+1,out+2*n);
-    k++;
+    //er=max_element(out+1,out+2*n);
+    //ew=min_element(out+1,out+2*n);
+    //k++;
     //cout<<*er;
-    }
-   while(*er>0.00001);
-    
+   
     //show1(s,e);show1(s,f);show2(s,G);show2(s,B);
     //show1(n,P);show1(n,Q);show1(n,lp);show1(n,lq);
    // show1(n,a);show1(n,b);show2(n,h);

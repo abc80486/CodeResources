@@ -3,7 +3,7 @@
 //#include<cstring>
 #include<fstream>
 //#include<math.h>
-
+//#define double float
 const int N=10;
 //#define M 100
 using namespace std;
@@ -13,14 +13,14 @@ void show2(int n,double (*a)[N]){
         for(int j=1;j<=n;j++){
             printf("%lf ",a[i][j]);
         }
-        cout<<endl;
+        cout<<endl<<endl;
     }
 }
 void show1(int n,double *a){
     for(int j=1;j<=n;j++){
             printf("%lf ",a[j]);
      }
-    cout<<endl;
+    cout<<endl<<endl;
 }
 
 void inputdata(int *n,int *m,double(*g)[N],double(*b)[N]){
@@ -52,16 +52,19 @@ void input( int n, int m,double *e,double *f,double *p0,double *q0){
         fin>>p0[i]>>q0[i];}
     
 }
-void acquirepqab(int n,int m,double *lp,double *lq,double *a,double *b){
+void acquirepqab(int n,int m,double *lp,double *lq){
     for(int i=1;i<=n;i++){
-        for(int j=1;j<=n+m+1;j++){
+        lp[i]=lq[i]=0.0;
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=5;j++){
      lp[i]+=e[i]*(G[i][j]*e[j]-B[i][j]*f[j])+f[i]*(G[i][j]*f[j]+B[i][j]*e[j]);
      lq[i]+=f[i]*(G[i][j]*e[j]-B[i][j]*f[j])-e[i]*(G[i][j]*f[j]+B[i][j]*e[j]);
         }
     }
     for(int i=1;i<=n;i++){
-        a[i]=(lp[i]*e[i]+(-lq[i])*(-f[i]))/(e[i]*e[i]+f[i]*f[i]);
-        b[i]=((-lq[i])*e[i]-lp[i]*(-f[i]))/(e[i]*e[i]+f[i]*f[i]);
+        a[i]=(lp[i]*e[i]+(-lq[i])*(-1.0*f[i]))/(e[i]*e[i]+f[i]*f[i]);
+        b[i]=((-1.0*lq[i])*e[i]-lp[i]*(-1.0*f[i]))/(e[i]*e[i]+f[i]*f[i]);
        lp[i]=P[i]-lp[i];lq[i]=Q[i]-lq[i];
     }
 }
@@ -109,25 +112,16 @@ int main(){
     int n,m,s,k=1;
     inputdata(&n,&m,G,B);
     input(n,m,e,f,P,Q);
-
-    acquirepqab(n,m,lp,lq,a,b);
+    acquirepqab(n,m,lp,lq);
     acquireJ(n,h,n1,j,l);
-    //acquireab(n,a,b);
     acquirejmat(n,jj,h,n1,j,l);
     for(int i=1;i<=n;i++){
         pq[k++]=lp[i];
         pq[k++]=lq[i];
     }
     s=n+m+1;
-    //show1(s,e);show1(s,f);show2(s,G);show2(s,B);show1(n,P);show1(n,Q);
-    //show1(n,lp);show1(n,lq);show1(n,a);show1(n,b);show2(n,h);
-    show2(2*n,jj);
-    for(int i=1;i<=2*n;i++){
-        for(int j=1;j<=2*n;j++){
-            //printf("%lf ",jj[i][j]);
-        }
-        cout<<endl;
-    }
+    //show2(s,G);show2(s,B);show1(s,e);show1(s,f);
+    show1(2*n,pq);
     return 0;
 }
 
