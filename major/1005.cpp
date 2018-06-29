@@ -17,11 +17,9 @@ bool matrixmul(double (*p)[N],double (*y)[N],int a,int b,int c);
 double pc(const int n,int h,int k,double(*a)[N]);
 void ax(int n,double(*a)[N]);
 bool output(int n,double(*a)[N],double *u,double *out);
-double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],a[N],b[N];
-double le[N],lf[N],lp[N],lq[N];
-double h[N][N],n1[N][N],j1[N][N],l[N][N],pq[N];
-//ofstream fout("out.txt");
-double jj[N][N];
+
+double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N]={0.0},Q[N]={0.0},a[N],b[N];
+
 void show(int n,double(*p)[N]){
      for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
@@ -182,7 +180,6 @@ void ax(int n,double(*a)[N]){
          }
      }
 }
-//double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],u1=1.06,a[N],b[N];
 void show2(int n,double (*a)[N]){
     ofstream fout("out.txt");
     for(int i=1;i<=n;i++){
@@ -233,7 +230,7 @@ void input( int n, int m,double *e,double *f,double *p0,double *q0){
         fin>>p0[i]>>q0[i];}
     
 }
-void acquirepqab(int n,int m){
+void acquirepqab(int n,int m,double *lp,double *lq,double *pq){
     int k=1;
     for(int i;i<=n;i++){
         lp[i]=0.0;lq[i]=0.0;
@@ -290,24 +287,30 @@ void acquirejmat(int n,double (*jj)[N],double (*H)[N],double (*N1)[N],double (*J
 
 }
 int main(){
-    //double lp[N],lq[N];
-   // double h[N][N],n1[N][N],j1[N][N],l[N][N];
-    //ofstream fout("out.xt");
-    //double jj[N][N];
+    ofstream fout("out.txt");
+    double lp[N],lq[N],le[N],lf[N];
+    double h[N][N],n1[N][N],j1[N][N],l[N][N];
+    double jj[N][N],pq[N];
+    double pline[N][N],qline[N][N];//线路功率损耗；
     double out[N]={0.0};
     int n,m,s,k=0,c=1;;
-   // double *er,*ew;
+    double *er,*ew;
     inputdata(&n,&m,G,B);
     input(n,m,e,f,P,Q);
     s=n+m+1;
     do
     {
-    printf("第 %d 次迭代\n",k);
-    acquirepqab(n,m);
+    //printf("第 %d 次迭代\n",k);
+    acquirepqab(n,m,lp,lq,pq);
     acquireJ(n,h,n1,j1,l);
     acquirejmat(n,jj,h,n1,j1,l);
     //show2(2*n,jj);  
-    show1(n,e);
+    //show1(n,e);
+    cout<<endl<<endl<<"节点电压"<<k<<": ";
+    for(int i=1;i<=n;i++){
+        cout<<e[i]<<"+j"<<f[i]<<" "<<ends;;
+    }
+    cout<<endl<<endl;
     output(2*n,jj,pq,out);
     c=1;
     for(int i=1;i<=n;i++){
@@ -319,53 +322,32 @@ int main(){
         e[i]+=le[i];
         f[i]+=lf[i];
     }
+    er=max_element(out+1,out+2*n);
+    ew=min_element(out+1,out+2*n);
     k++;
       }
-   while(k<=15);
-       /*
-        //cout<<"迭代过程中各节点的不平衡量："<<endl;
-        for(int i=1;i<=n;i++){
-            //cout<<lp[i]<<"+j"<<lq[i]<<"  ";
-        }
-        cout<<endl<<endl;
-        
-        //show2()
-        
-        //cout<<"迭代过程中各节点电压修正量："<<endl;
-        for(int i=1;i<=n;i++){
-           // cout<<le[i]<<"+j"<<lf[i]<<" ";
-        }
-       // cout<<endl<<endl<<"迭代过程中节点电压："<<endl;
-        for(int i=1;i<=n;i++){
-           // cout<<e[i]<<"+j"<<f[i]<<" "<<ends;
-        }
-       // cout<<endl<<endl<<"迭代过程中雅克比矩阵对角元："<<endl;
-        for(int i=1;i<=n;i++){
-            //cout<<h[i][i]<<"  "<<l[i][i]<<"  "<<ends;
-        }
-        cout<<endl<<endl;
-        */
-        
-    //show1(n,e);
-    //er=max_element(out+1,out+2*n);
-    //ew=min_element(out+1,out+2*n);
-    //k++;
-    //cout<<*er;
-   
-    //show1(s,e);show1(s,f);show2(s,G);show2(s,B);
-    //show1(n,P);show1(n,Q);show1(n,lp);show1(n,lq);
-   // show1(n,a);show1(n,b);show2(n,h);
-    /*
-    for(int i=1;i<=2*n;i++){
-        for(int j=1;j<=2*n;j++){
-           printf("%lf ",jj[i][j]);
-        }
-        cout<<endl<<endl;
-    }
-    */
-    //cout<<endl
-    //show2(n,h);show2(n,n1);show2(n,j1);show2(n,l);
-    //show1(2*n,pq);
-    //show1(2*n,out);
+   while(*er>0.00001||*ew<-0.00001);
+   //show1(n,e);
+   for(int i=1;i<=s;i++){
+       P[s]+=G[s][i]*e[i]-B[s][i]*f[i];
+       Q[s]+=-1*(B[s][i]*e[i]+G[s][i]*f[i]);
+   }
+   P[s]=P[s]*e[s]-Q[s]*f[s];
+   Q[s]=P[s]*f[s]+Q[s]*e[s];
+   //cout<<endl<<"平衡节点功率：" <<P[s]<<"＋j"<<Q[s]<<endl;
+   ///*
+   for(int i=1;i<=s;i++){
+       for(int j=1;j<=s;j++){
+           if(i!=j){
+               pline[i][j]=B[i][0]*f[i]-e[i]*G[i][0]-G[i][j]*(e[i]-e[j])-B[i][j]*(f[j]-f[i]);
+               qline[i][j]=e[i]*B[i][0]+f[i]*G[i][0]+(e[i]-e[j])*B[i][j]-G[i][j]*(f[j]-f[i]);
+               pline[i][j]=pline[i][j]*e[i]-qline[i][j]*f[i];
+               qline[i][j]=pline[i][j]*f[i]+qline[i][j]*e[i];
+           }
+       }
+   }
+   // show2(s,qline);
+   //*/
+    cout<<endl;
     return 0;
 }
