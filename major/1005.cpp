@@ -2,10 +2,11 @@
 #include<iostream>
 #include<fstream>
 #include<algorithm>
+#include<cmath>
 const int N=20;
+//#define GB 100a
+//#define EFPG 100b
 //#define double long double
-//#define lf 
-//long double op[20][20];
 using namespace std;
 bool inversematrix(double (*s)[N],int n);
   void zeroline(int j,int i,int n,double(*a)[N]);
@@ -19,7 +20,8 @@ void ax(int n,double(*a)[N]);
 bool output(int n,double(*a)[N],double *u,double *out);
 
 double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N]={0.0},Q[N]={0.0},a[N],b[N];
-
+double g0[]={0.0,0.000012,0.0,-0.000072,0.000075,-0.000011};
+double b0[]={0.0,-0.000433,0.0,0.002068,-0.002166,0.000412};
 void show(int n,double(*p)[N]){
      for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
@@ -202,7 +204,7 @@ void show1(int n,double *a){
 }
 
 void inputdata(int *n,int *m,double(*g)[N],double(*b)[N]){
-    ifstream fin("gb.txt");
+    ifstream fin("101a.txt");
     int i,j;
     double y,u;
     //scanf("%d%d",n,m);
@@ -220,9 +222,13 @@ void inputdata(int *n,int *m,double(*g)[N],double(*b)[N]){
        // cout<<b[i][j]<<endl;
         
     }
+    for(int i=1;i<=*n;i++){
+        g[i][i]+=g0[i];
+        b[i][i]+=b0[i];
+    }
 }
 void input( int n, int m,double *e,double *f,double *p0,double *q0){
-    ifstream fin("efpq.txt");
+    ifstream fin("101b.txt");
     int k=m+n+1;
     for(int i=1;i<=n+m+1;i++){
         fin>>e[i]>>f[i];}
@@ -308,7 +314,13 @@ int main(){
     //show1(n,e);
     cout<<endl<<endl<<"节点电压"<<k<<": ";
     for(int i=1;i<=n;i++){
-        cout<<e[i]<<"+j"<<f[i]<<" "<<ends;;
+        //cout<<e[i]<<"+j"<<f[i]<<" ";
+        cout<<sqrt(e[i]*e[i]+f[i]*f[i])<<" ";
+
+    }
+    cout<<endl<<endl<<"电压偏移"<<k<<": ";
+    for(int i=1;i<=n;i++){
+        cout<<le[i]<<"+j"<<lf[i]<<" "<<ends;
     }
     cout<<endl<<endl;
     output(2*n,jj,pq,out);
@@ -326,7 +338,7 @@ int main(){
     ew=min_element(out+1,out+2*n);
     k++;
       }
-   while(*er>0.00001||*ew<-0.00001);
+   while(*er>1.0e-7||*ew<-1.0e-7);
    //show1(n,e);
    for(int i=1;i<=s;i++){
        P[s]+=G[s][i]*e[i]-B[s][i]*f[i];
