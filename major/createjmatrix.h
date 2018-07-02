@@ -4,7 +4,7 @@
 #include<fstream>
 //#include<math.h>
 //#define double float
-const int N=20;
+//const int N=20;
 //#define M 100
 using namespace std;
 double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],a[N],b[N];
@@ -139,24 +139,7 @@ void acquirejmat(int n,double (*jj)[N],double (*H)[N],double (*N1)[N],double (*J
 
 
 }
-int main(){
-    //double lp[N],lq[N];
-    //double h[N][N],n1[N][N],j[N][N],l[N][N];
-   
-    bool createj(double (*jj)[N],double *pqu,int *n,int *m);
-    double jj[N][N];
-    double pq[N];
-    int n,m;
-    createj(jj,pq,&n,&m);
-    //show1(n*2,pq); 
-    //ofstream fout("100b.txt");
-    
-    //s=n+m+1;
-    //show2(s,G);show2(s,B);show1(s,e);show1(s,f);
-    //show1(2*n,pq);
-    return 0;
-}
-bool createj(double (*jj)[N],double *pqu,int *n,int *m){
+bool createj(double (*jj)[N],double *pqu,int *n,int *m,double *ee,double *ff){
     double lp[N],lq[N];
     double h[N][N],n1[N][N],j[N][N],l[N][N];
     int s,k=1;
@@ -164,7 +147,11 @@ bool createj(double (*jj)[N],double *pqu,int *n,int *m){
     inputdata(&nn,&mm,G,B,P,Q);
     *n=nn;*m=mm;
     s=*m+*n+1;
-    input(nn,mm,e,f); 
+    for(int i=1;i<=s;i++){
+        e[i]=ee[i];
+        f[i]=ff[i];
+    }
+   // input(nn,mm,e,f); 
     acquirepqab(nn,mm,lp,lq);
     acquireJ(nn,h,n1,j,l);
     acquirejmat(nn,jj,h,n1,j,l);//show2(2*nn,jj);
@@ -172,7 +159,9 @@ bool createj(double (*jj)[N],double *pqu,int *n,int *m){
             pqu[k++]=lp[i];
             pqu[k++]=lq[i];
      }
+    
      //show1(2*nn,pqu);
      return true;
 }
+
 

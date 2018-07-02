@@ -1,28 +1,35 @@
-#include<iostream>
+#include"LinearEquationSolve.h"
 #include<cstdio>
-//#include<cstring>
+#include<iostream>
 #include<fstream>
-//#include<math.h>
-//#define double float
-const int N=20;
-//#define M 100
+#include<algorithm>
+#include<cmath>
+const double PI=3.14159246;
 using namespace std;
-double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N],Q[N],a[N],b[N];
+double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N]={0.0},Q[N]={0.0},a[N],b[N];
+//double g0[10]={0.0,0.000012,0.0,-0.000072,0.000075,-0.000011};
+//double b0[10]={0.0,-0.000433,0.0,0.002068,-0.002166,0.000412};
+
 void show2(int n,double (*a)[N]){
+    ofstream fout("out.txt");
     for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
             printf("%lf ",a[i][j]);
+            fout<<a[i][j];
         }
+        fout<<endl<<endl;
         cout<<endl<<endl;
     }
 }
 void show1(int n,double *a){
+    ofstream fout("out.txt");
     for(int j=1;j<=n;j++){
             printf("%lf ",a[j]);
+            fout<<a[j];
      }
+    fout<<endl<<endl;
     cout<<endl<<endl;
 }
-
 void inputdata(int *n,int *m,double(*g)[N],double(*b)[N],double *p0,double *q0){
     ifstream fin("100a.txt");
     int i,j,tnum=0,sp;
@@ -87,7 +94,8 @@ void input( int n, int m,double *e,double *f){
     
     
 }
-void acquirepqab(int n,int m,double *lp,double *lq){
+void acquirepqab(int n,int m,double *lp,double *lq,double *pq){
+    int k=1; 
     for(int i=1;i<=n+1;i++){
         lp[i]=lq[i]=0.0;
     }
@@ -101,7 +109,9 @@ void acquirepqab(int n,int m,double *lp,double *lq){
         a[i]=(lp[i]*e[i]+(-lq[i])*(-1.0*f[i]))/(e[i]*e[i]+f[i]*f[i]);
         b[i]=((-1.0*lq[i])*e[i]-lp[i]*(-1.0*f[i]))/(e[i]*e[i]+f[i]*f[i]);
        lp[i]=P[i]-lp[i];lq[i]=Q[i]-lq[i];
-    }
+       pq[k++]=lp[i];
+        pq[k++]=lq[i];
+    } 
 }
 
 void acquireJ(int n,double (*H)[N],double (*N1)[N],double (*J)[N],double (*L)[N]){
@@ -140,39 +150,71 @@ void acquirejmat(int n,double (*jj)[N],double (*H)[N],double (*N1)[N],double (*J
 
 }
 int main(){
-    //double lp[N],lq[N];
-    //double h[N][N],n1[N][N],j[N][N],l[N][N];
-   
-    bool createj(double (*jj)[N],double *pqu,int *n,int *m);
-    double jj[N][N];
-    double pq[N];
-    int n,m;
-    createj(jj,pq,&n,&m);
-    //show1(n*2,pq); 
-    //ofstream fout("100b.txt");
-    
-    //s=n+m+1;
-    //show2(s,G);show2(s,B);show1(s,e);show1(s,f);
-    //show1(2*n,pq);
+    ofstream fout("out.txt");
+    double lp[N],lq[N],le[N],lf[N];
+    double h[N][N],n1[N][N],j1[N][N],l[N][N];
+    double jj[N][N],pq[N];
+    double pline[N][N],qline[N][N];//线路功率；
+    double out[N]={0.0};
+    int n,m,s,k=0,c=1,kp=1,kkl=20;
+    double *er,*ew;
+    inputdata(&n,&m,G,B,P,Q);
+    input(n,m,e,f);
+    s=n+m+1;
+    //show1(s,P);
+    do
+    {
+    kp=1;c=1;
+    acquirepqab(n,m,lp,lq,pq);
+    acquireJ(n,h,n1,j1,l);
+    acquirejmat(n,jj,h,n1,j1,l);//show2(2*n,jj);
+    output(2*n,jj,pq,out);//show1(2*n,out);
+    for(int i=2;i<=n+1;i++){
+        lf[i]=out[c++];
+        le[i]=out[c++];
+     }
+    for(int i=2;i<=n+1;i++){
+        e[i]+=le[i];
+        f[i]+=lf[i];
+    }
+    er=max_element(out+1,out+2*n);
+    ew=min_element(out+1,out+2*n);
+    k++;
+      }
+    while(*er>1.0e-5||*ew<-1.0e-5);
+    //while(kkl--);
+    printf("\n电压P：");
+    show1(s,e);
+    printf("电压Q: ");
+    show1(s,f);
+    printf("电压大小:   ");
+    for(int i=1;i<=s;i++){
+        cout<<sqrt(e[i]*e[i]+f[i]*f[i])<<" ";
+    }
+    printf("\n\n电压相位(度):");
+    for(int i=1;i<=s;i++){
+        cout<<atan2(f[i],e[i])*180.0/PI<<" ";
+    }
+   for(int i=1;i<=s;i++){
+       P[1]+=G[1][i]*e[i]-B[1][i]*f[i];
+       Q[1]+=-(B[1][i]*e[i])-(G[1][i]*f[i]);
+   }
+   P[1]=P[1]*e[1]-Q[1]*f[1];
+   Q[1]=P[1]*f[1]+Q[1]*e[1];
+   cout<<endl<<endl<<"平衡节点功率：" <<P[1]<<"＋j"<<Q[1]<<endl;
+   ///*
+   for(int i=1;i<=s;i++){
+       for(int j=1;j<=s;j++){
+           if(i!=j){
+               pline[i][j]=B[i][0]*f[i]-e[i]*G[i][0]-G[i][j]*(e[i]-e[j])-B[i][j]*(f[j]-f[i]);
+               qline[i][j]=e[i]*B[i][0]+f[i]*G[i][0]+(e[i]-e[j])*B[i][j]-G[i][j]*(f[j]-f[i]);
+               pline[i][j]=pline[i][j]*e[i]-qline[i][j]*f[i];
+               qline[i][j]=pline[i][j]*f[i]+qline[i][j]*e[i];
+           }
+       }
+   }
+    show2(s,qline);
+   //*/
+    cout<<endl;
     return 0;
 }
-bool createj(double (*jj)[N],double *pqu,int *n,int *m){
-    double lp[N],lq[N];
-    double h[N][N],n1[N][N],j[N][N],l[N][N];
-    int s,k=1;
-    int nn,mm;
-    inputdata(&nn,&mm,G,B,P,Q);
-    *n=nn;*m=mm;
-    s=*m+*n+1;
-    input(nn,mm,e,f); 
-    acquirepqab(nn,mm,lp,lq);
-    acquireJ(nn,h,n1,j,l);
-    acquirejmat(nn,jj,h,n1,j,l);//show2(2*nn,jj);
-    for(int i=2;i<=nn+1;i++){
-            pqu[k++]=lp[i];
-            pqu[k++]=lq[i];
-     }
-     //show1(2*nn,pqu);
-     return true;
-}
-

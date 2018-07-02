@@ -21,9 +21,10 @@ void ax(int n,double(*a)[N]);
 bool output(int n,double(*a)[N],double *u,double *out);
 
 double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N]={0.0},Q[N]={0.0},a[N],b[N];
-double g0[]={0.0,0.000012,0.0,-0.000072,0.000075,-0.000011};
-double b0[]={0.0,-0.000433,0.0,0.002068,-0.002166,0.000412};
-
+double g0[10]={0.0,0.000012,0.0,-0.000072,0.000075,-0.000011};
+double b0[10]={0.0,-0.000433,0.0,0.002068,-0.002166,0.000412};
+//double g0[10]={0.0};
+//double b0[10]={0.0};
 void show(int n,double(*p)[N]){
      for(int i=1;i<=n;i++){
         for(int j=1;j<=n;j++){
@@ -204,31 +205,43 @@ void show1(int n,double *a){
     fout<<endl<<endl;
     cout<<endl<<endl;
 }
-
 void inputdata(int *n,int *m,double(*g)[N],double(*b)[N]){
-    ///G[][0]={0.0,0.000012,0.0,-0.000072,0.000075,-0.000011};
- //B[][0]={0.0,-0.000433,0.0,0.002068,-0.002166,0.000412};
-    
-    ifstream fin("101a.txt");
-    int i,j;
+    ifstream fin("100a.txt");
+    int i,j,tnum=0,sp;
     double y,u;
-    //scanf("%d%d",n,m);
-   
-    fin>>*n>>*m;
+    fin>>*n>>*m>>tnum;
+    sp=*n+*m+1;
+    double k[sp][sp];
+    int kp[sp][2];
+    for(int t1=1;t1<=tnum;t1++){
+           double kt;
+           fin>>kp[t1][0]>>kp[t1][1]>>kt;
+           k[kp[t1][0]][kp[t1][1]]=kt;
+       }
     while(fin>>i>>j&& i!=0 && j!=0){
-       // scanf("%lf%lf",&y,&u);
        fin>>y>>u;
-        g[i][i]+=y/(y*y+u*u);
-        g[j][j]+=y/(y*y+u*u);
-        g[j][i]=g[i][j]=-y/(y*y+u*u);
-       // cout<<g[i][j]<<endl;
-        b[i][i]+=-u/(y*y+u*u);
-        b[j][j]+=-u/(y*y+u*u);
-        b[j][i]=b[i][j]=u/(y*y+u*u);
-       // cout<<b[i][j]<<endl;
-        
+        g[i][j]=-y/(y*y+u*u);
+        b[i][j]=u/(y*y+u*u);
+       for(int ko=1;ko<=tnum;ko++){
+           if(i==kp[ko][0]&&j==kp[ko][1]){
+               g[i][j]*=k[i][j];
+               b[i][j]*=k[i][j];
+               break;
+           }
+           if(j==kp[ko][0]&&i==kp[ko][1]){
+               g[i][j]/=k[j][i];
+               b[i][j]/=k[j][i];
+            break;
+           }
+       }
+       g[j][i]=g[i][j];
+       b[j][i]=b[i][j];
+        g[i][i]+=-g[j][i];
+        g[j][j]+=-g[j][i];
+        b[i][i]+=-b[i][j];
+        b[j][j]+=-b[i][j];
     }
-    for(int i=1;i<=*n;i++){
+    for(int i=1;i<=sp;i++){
         g[i][i]+=g0[i];
         b[i][i]+=b0[i];
         g[i][0]=g0[i];
@@ -236,7 +249,7 @@ void inputdata(int *n,int *m,double(*g)[N],double(*b)[N]){
     }
 }
 void input( int n, int m,double *e,double *f,double *p0,double *q0){
-    ifstream fin("101b.txt");
+    ifstream fin("100b.txt");
     int k=m+n+1;
     for(int i=1;i<=n+m+1;i++){
         fin>>e[i]>>f[i];}
@@ -312,9 +325,9 @@ int main(){
     inputdata(&n,&m,G,B);
     input(n,m,e,f,P,Q);
     s=n+m+1;
+    //show2(s,G);
     do
     {
-    //printf("第 %d 次迭代\n",k);
     acquirepqab(n,m,lp,lq,pq);
     acquireJ(n,h,n1,j1,l);
     acquirejmat(n,jj,h,n1,j1,l);
@@ -331,7 +344,10 @@ int main(){
     }
     //cout<<endl<<endl;
     cout<<ends;
+   
+    //show1(2*n,pq);
     output(2*n,jj,pq,out);
+ show1(2*n,out);
     c=1;
     for(int i=1;i<=n;i++){
         lf[i]=out[c++];
@@ -359,17 +375,19 @@ int main(){
     for(int i=1;i<=s;i++){
         cout<<atan2(f[i],e[i])*180.0/PI<<" ";
     }
+    cout<<endl;
    //show2(s,B);
-  
+  //cout<<endl<<P[s]<<" "<<Q[s];
    for(int i=1;i<=s;i++){
        P[s]+=G[s][i]*e[i]-B[s][i]*f[i];
-       Q[s]+=-B[s][i]*e[i]-G[s][i]*f[i];
-       //cout<<e[i]<<" "<<f[i]<<endl;
-       //cout<<f[5]<<endl;
+       Q[s]+=-(B[s][i]*e[i])-(G[s][i]*f[i]);
+       //cout<<B[s][i]<<" "<<G[s][i]<<endl;
+       //cout<<Q[s]<<endl;
    }
-   Q[s]=Q[s]*e[s];
+   //Q[s]=Q[s]*e[s];
+   //cout<<endl<<P[s]<<" "<<Q[s];
    P[s]=P[s]*e[s]-Q[s]*f[s];
-  // Q[s]=P[s]*f[s]+Q[s]*e[s];
+   Q[s]=P[s]*f[s]+Q[s]*e[s];
    
    cout<<endl<<endl<<"平衡节点功率：" <<P[s]<<"＋j"<<Q[s]<<endl;
    ///*
@@ -383,7 +401,7 @@ int main(){
            }
        }
    }
-    show2(s,qline);
+    //show2(s,qline);
    //*/
     cout<<endl;
     return 0;
