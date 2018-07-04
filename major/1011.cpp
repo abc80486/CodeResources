@@ -10,23 +10,30 @@ double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N]={0.0},Q[N]={0.0},dut[N],a[N],b[N];
 double pline[N][N],qline[N][N];
 void show2(int n,double (*a)[N]){
     //ofstream fout("out.txt");
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=n;j++){
-            printf("%lf,",a[i][j]);
-            //fout<<a[i][j];
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=n;j++){
+            
+            if(j==0){cout<<"  "<<i<<"  ";}
+            else{
+                cout.width(10);
+                if(i==0){cout<<j<<"  ";}
+                else{
+                //printf("%lf,",a[i][j]);
+                cout<<a[i][j]<<"   ";}
+            }
         }
-        //fout<<endl<<endl;
-        cout<<";"<<endl<<endl;
+        cout<<endl<<endl;
     }
 }
 void show1(int n,double *a){
-    ofstream fout("out.txt");
+    
     for(int j=1;j<=n;j++){
-            printf("%lf,",a[j]);
-            //fout<<a[j];
+            //printf("%lf,",a[j]);
+            cout.width(10);
+            cout<<a[j]<<"   ";
      }
     //fout<<endl<<endl;
-    cout<<";"<<endl<<endl;
+    cout<<endl<<endl;
 }
 
 void acquirepqab(int n,int m,double *lp,double *lq,double *pq){
@@ -138,11 +145,13 @@ void show3(int s){
     show1(s,f);
     printf("电压大小:   ");
     for(int i=1;i<=s;i++){
-        cout<<sqrt(e[i]*e[i]+f[i]*f[i])<<" ";
+        cout.width(10);
+        cout<<sqrt(e[i]*e[i]+f[i]*f[i])<<"  ";
     }
     printf("\n\n电压相位(度):");
     for(int i=1;i<=s;i++){
-        cout<<atan2(f[i],e[i])*180.0/PI<<" ";
+                cout.width(10);
+        cout<<atan2(f[i],e[i])*180.0/PI<<"  ";
     }
    for(int i=1;i<=s;i++){
        P[1]+=G[1][i]*e[i]-B[1][i]*f[i];
@@ -162,9 +171,11 @@ void show3(int s){
            }
        }
    }
-   cout<<endl<<"功率分布："<<endl<<endl;
+   cout<<endl<<"功率分布："<<endl;
+   cout<<" "<<"有功功率P:"<<endl;
     show2(s,pline);
     cout<<endl;
+    cout<<" "<<"无功功率Q:"<<endl;
     show2(s,qline);
     cout<<endl;
 }
@@ -257,6 +268,24 @@ int main(){
     acquireJ(n,m,h,n1,j1,l);
     acquirejmat(n,m,jj,h,n1,j1,l);//show2(10,jj);
     output(2*(n+m),jj,pq,out);//show1(10,out); 
+    cout<<endl<<endl<<"节点电压"<<k<<": "<<endl;
+    for(int i=1;i<=s;i++){
+        cout<<e[i]<<" ";
+    }
+     cout<<endl;
+    for(int i=1;i<=s;i++){
+        cout<<"+j"<<f[i]<<" ";
+    }
+    cout<<endl<<endl<<"电压偏移"<<k<<": "<<endl;
+    for(int i=2;i<=s;i++){
+        cout<<le[i]<<" ";
+    }
+    cout<<endl;
+    for(int i=2;i<=s;i++){
+        cout<<"+j"<<lf[i]<<" ";
+    }
+   
+    cout<<endl<<endl;
     for(int i=2;i<=n+m+1;i++){
         le[i]=out[c++];lf[i]=out[c++];}
     for(int i=2;i<=n+m+1;i++){
@@ -267,7 +296,7 @@ int main(){
     k++;
       }
     while(*er>1.0e-5||*ew<-1.0e-5);
-    while(kkl--);
+    //while(kkl--);
    show3(s);
     return 0;
 }

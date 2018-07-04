@@ -55,10 +55,10 @@ while precision > 0.00001
 	            Ai(n)=G(m,n)*E(n)-B(m,n)*F(n); 
                 Bi(n)=G(m,n)*F(n)+B(m,n)*E(n);
         end
-        N(m,m)=sum(Ai)+G(m,m)*E(m)+B(m,m)*F(m);%计算dP/de
-        H(m,m)=sum(Bi)-B(m,m)*E(m)+G(m,m)*F(m);%计算dP/df
-        L(m,m)= -sum(Bi)-B(m,m)*E(m)+G(m,m)*F(m);%计算dQ/de
-        J(m,m)= sum(Ai)-G(m,m)*E(m)-B(m,m)*F(m);%计算dQ/df
+        N(m,m)=sum(Ai)+G(m,m)*E(m)+B(m,m)*F(m);
+        H(m,m)=sum(Bi)-B(m,m)*E(m)+G(m,m)*F(m);
+        L(m,m)= -sum(Bi)-B(m,m)*E(m)+G(m,m)*F(m);
+        J(m,m)= sum(Ai)-G(m,m)*E(m)-B(m,m)*F(m);
     end
 
 for m=2:N1+1
@@ -102,7 +102,7 @@ for n=1:N1+1
         U(n)=E(n)+(F(n))*j; 
 end
 k=k+1;
-time=k,U,dU,JJ 
+time=k,U,dU
 if k>9;
 break
 end

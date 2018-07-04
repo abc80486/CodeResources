@@ -267,7 +267,7 @@ int main(){
     k++;
       }
     while(*er>1.0e-5||*ew<-1.0e-5);
-    while(kkl--);
+    //while(kkl--);
    show3(s);
     return 0;
 }
