@@ -213,6 +213,7 @@ int main(){
            }
        }
    }
+   cout<<endl<<"功率分布："<<endl<<endl;
     show2(s,qline);
    //*/
     cout<<endl;
