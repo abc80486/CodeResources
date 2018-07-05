@@ -102,15 +102,15 @@ void acquireJ(int n,int m,double (*H)[N],double (*N1)[N],double (*J)[N],double (
     for(int i=n+2;i<=n+m+1;i++){
         for(int j=2;j<=n+m+1;j++){
            if(i!=j){
-               J[i][j]=-G[i][j]*e[i]+B[i][j]*f[i];
+               //J[i][j]=-G[i][j]*e[i]+B[i][j]*f[i];
                H[i][j]=-B[i][j]*e[i]+G[i][j]*f[i];
-                 //N1[i][j]=G[i][j]*e[i]+B[i][i]*f[i];
-                N1[i][j]=0.0;L[i][j]=0.0;}
+                 N1[i][j]=G[i][j]*e[i]+B[i][i]*f[i];
+                J[i][j]=0.0;L[i][j]=0.0;}
             else{
-                 J[i][j]=-G[i][j]*e[i]+B[i][j]*f[i]+a[i];
+                 //J[i][j]=-G[i][j]*e[i]+B[i][j]*f[i]+a[i];
                 H[i][j]=-B[i][j]*e[i]+G[i][j]*f[i]+b[i];
-                // N1[i][j]=G[i][j]*e[i]+B[i][i]*f[i]+a[i];
-                 L[i][i]=2.0*e[i];N1[i][i]=2.0*f[i];
+                 N1[i][j]=G[i][j]*e[i]+B[i][i]*f[i]+a[i];
+                 J[i][i]=2.0*e[i];L[i][i]=2.0*f[i];
             }
 
         }
@@ -121,13 +121,13 @@ void acquirejmat(int n,int m,double (*jj)[N],double (*H)[N],double (*N1)[N],doub
     int k=1,p=1;
     for(int i=2;i<=n+m+1;i++){
         for(int j=2;j<=n+m+1;j++){
-            jj[p][k++]=-J[i][j];
             jj[p][k++]=H[i][j];
+            jj[p][k++]=N1[i][j];
         }
         k=1;p++;
         for(int j=2;j<=n+m+1;j++){
+            jj[p][k++]=J[i][j];
             jj[p][k++]=L[i][j];
-            jj[p][k++]=-N1[i][j];
         }
         k=1;p++;
     }
@@ -253,7 +253,7 @@ int main(){
     double jj[N][N],pq[N];
     //double pline[N][N],qline[N][N];//线路功率；
     double out[N]={0.0};
-    int n,m,s,k=0,c=1,kp=1,kkl=1;
+    int n,m,s,k=0,c=1,kp=1,kkl=0;
     clock_t uyt,uio;
     double hjk;
     uyt=clock();
@@ -276,30 +276,30 @@ int main(){
     for(int i=1;i<=s;i++){
        // cout<<"+j"<<f[i]<<" ";
     }
-    cout<<endl<<endl<<"电压偏移"<<k<<": "<<endl;
+    //cout<<endl<<endl<<"电压偏移"<<k<<": "<<endl;
     for(int i=2;i<=s;i++){
-        cout<<le[i]<<" ";
+        //cout<<le[i]<<" ";
     }
     cout<<endl;
     for(int i=2;i<=s;i++){
-        cout<<"+j"<<lf[i]<<" ";
+        //cout<<"+j"<<lf[i]<<" ";
     }
    
-    cout<<endl<<endl;
+    //cout<<endl<<endl;
     for(int i=2;i<=n+m+1;i++){
-        le[i]=out[c++];lf[i]=out[c++];}
+        lf[i]=out[c++];le[i]=out[c++];}
     for(int i=2;i<=n+m+1;i++){
-        e[i]+=le[i]; f[i]+=lf[i];}
+        e[i]-=le[i]; f[i]-=lf[i];}
         //show1(6,e);
     er=max_element(out+1,out+2*(n+m));
     ew=min_element(out+1,out+2*(n+m));
     k++;
       }
-    while(*er>1.0e-10||*ew<-1.0e-10);
+    while(*er>1.0e-5||*ew<-1.0e-5);
     //while(kkl--);
     show3(s);
     uio=clock();
     hjk=(double)(uio-uyt)/CLOCKS_PER_SEC;
-    cout<<" 计算时间："<<hjk<<"s"<<endl<<endl;
+    cout<<hjk<<"s"<<endl;
     return 0;
 }

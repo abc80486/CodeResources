@@ -376,8 +376,6 @@ void GFloatExp(char *a, int n, char *c) {
 
 int main() {
     int  n = 0;
-	int q, w;
-	
 	char a[1000] , b[1000] , c[1000];
 	ifstream fin("Gint.txt");
 	ofstream fout("Gintout.txt");
