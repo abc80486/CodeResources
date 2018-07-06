@@ -123,7 +123,7 @@ for n=1:6
    if m==n 
    S(m,n)=0; 
      else 
-    S(m,n)=U(m)*( conj(U(m)*Y(m))+( conj(U(m))- conj(U(n)))* conj(YB(m,n)));  end
+    S(m,n)=U(m)*( conj(U(m)*Y(m))+( conj(U(m))- conj(U(n)))* conj(-YB(m,n)));  end
 end
 end
 S1

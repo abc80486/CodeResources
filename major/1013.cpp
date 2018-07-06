@@ -9,7 +9,7 @@
 const double PI=3.14159246;
 using namespace std;
 #define N 20
-ifstream fin("101.txt");
+ifstream fin("102.txt");
 //求解线性方程组
 bool inversematrix(double (*s)[N],int n);
   void zeroline(int j,int i,int n,double(*a)[N]);
