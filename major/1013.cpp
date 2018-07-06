@@ -5,11 +5,12 @@
 #include<algorithm>
 #include<cmath>
 #include<time.h>
+
 const double PI=3.14159246;
 using namespace std;
-ifstream fin("101.txt");
-//线性方程组求解程序
 #define N 20
+ifstream fin("101.txt");
+//求解线性方程组
 bool inversematrix(double (*s)[N],int n);
   void zeroline(int j,int i,int n,double(*a)[N]);
 double determinant(int m,int n,double(*a)[N]);
@@ -180,8 +181,6 @@ bool output(int n,double(*a)[N],double *u,double *out){
     }
     return true;
 }
-
-//以上为线性方程组求解程序
 double G[N][N]={0},B[N][N]={0},e[N],f[N],P[N]={0.0},Q[N]={0.0},dut[N],a[N],b[N];
 double pline[N][N],qline[N][N];
 void show2(int n,double (*a)[N]){
@@ -334,10 +333,11 @@ void show3(int s){
    for(int i=1;i<=s;i++){
        for(int j=1;j<=s;j++){
            if(i!=j){
-               pline[i][j]=B[i][0]*f[i]-e[i]*G[i][0]-G[i][j]*(e[i]-e[j])-B[i][j]*(f[j]-f[i]);
-               qline[i][j]=e[i]*B[i][0]+f[i]*G[i][0]+(e[i]-e[j])*B[i][j]-G[i][j]*(f[j]-f[i]);
-               pline[i][j]=pline[i][j]*e[i]-qline[i][j]*f[i];
-               qline[i][j]=pline[i][j]*f[i]+qline[i][j]*e[i];
+               double as[N][N],ad[N][N];
+               as[i][j]=(B[i][0]*f[i]-e[i]*G[i][0]-G[i][j]*(e[i]-e[j])-B[i][j]*(f[j]-f[i]));
+               ad[i][j]=(e[i]*B[i][0]+f[i]*G[i][0]+(e[i]-e[j])*B[i][j]-G[i][j]*(f[j]-f[i]));
+               pline[i][j]=(as[i][j]*e[i]-ad[i][j]*f[i]);
+               qline[i][j]=as[i][j]*f[i]+ad[i][j]*e[i];
            }
        }
    }
@@ -380,10 +380,10 @@ void inputdata(int *n,int *m,double(*g)[N],double(*b)[N],double *p0,double *q0){
                break;
            }
            if(j==kp[ko][0]&&i==kp[ko][1]){
-               g[j][0]=g[i][j]*(1-k[j][i])/k[j][i]/k[j][i];
-               b[j][0]=b[i][j]*(1-k[j][i])/k[j][i]/k[j][i];
-               g[i][0]=g[i][j]*(k[j][i]-1)/k[j][i];
-               b[i][0]=b[i][j]*(k[j][i]-1)/k[j][i];
+               g[j][0]=g[i][j]*(1.0-k[j][i])/k[j][i]/k[j][i];
+               b[j][0]=b[i][j]*(1.0-k[j][i])/k[j][i]/k[j][i];
+               g[i][0]=g[i][j]*(k[j][i]-1.0)/k[j][i];
+               b[i][0]=b[i][j]*(k[j][i]-1.0)/k[j][i];
                g[i][j]/=k[j][i];
                b[i][j]/=k[j][i];
             break;
