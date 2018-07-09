@@ -46,7 +46,7 @@ int main(){
             else{
                 printf("%d %s\n",after[a].p,dirName[after[a].d+1]);
             }
-            printf("\n");
+           // printf("\n");
         }
     }
     return 0;

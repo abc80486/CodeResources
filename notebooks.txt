@@ -12,6 +12,6 @@ git remote add origin https://github.com/abc80486/data-structure.git
 
 	cd /Users/xiangbin/Repositories/CodeResources
 	git add .
-	git commit -m "7.6"
+	git commit -m "7.8"
 	git push
 	git status
