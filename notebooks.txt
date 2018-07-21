@@ -14,5 +14,5 @@ git remote add origin https://github.com/abc80486/data-structure.git
 	git add .
 	git commit -m "7.18"
 	git push
-	git status
-
+  	git status
+	
