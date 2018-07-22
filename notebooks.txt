@@ -13,7 +13,7 @@
   	git status
 	cd /Users/xiangbin/Repositories/SecondaryFile
 	git add .
-	git commit -m "surface3"
+git commit -m "surface3"
 	git push
   	git status
 12345
@@ -30,6 +30,7 @@
 	git push origin test:master //提交本地分支到远程分支master
 	git push origin :master //删除远程分支master
 	git branch -m abranch newbranch  //重名分支
+	git diff surface31  origin/master  //分支差异
 	版本：
 	git tag 
 	git tag [name]
