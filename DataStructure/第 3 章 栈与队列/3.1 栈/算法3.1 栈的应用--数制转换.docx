@@ -1,0 +1,13 @@
+void conversion(){
+    InitStack(S);
+    scanf("%d",N);
+    while(N){
+        Push(S,N%8);
+         N=N/8;
+
+    }
+    while(!StackEmpty(s)){
+        Pop(S,e);
+        printf("%d",e);
+    }
+}

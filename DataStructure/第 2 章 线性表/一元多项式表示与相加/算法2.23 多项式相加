@@ -1,0 +1,29 @@
+void AddPolyn(polynomial &Pa,polynomial &Pb){
+    ha=GetHead(Pa);
+    hb=GetHead(Pb);
+    qa=NextPos(Pa,ha);
+    qb=NextPos(Pb,hb);
+    while(qa&&qb){
+        a=GetCurElem(qa);
+        b=GetCurElem(qb);
+        switch(*com(a,b)){
+            case -1:
+                ha=qa;qa=NextPos(Pa,qa);break;
+            case 0:
+                sum=a.coef+b.coef;
+                if(sum!=0.0){
+                    SetCurElem(qa,sum);ha=qa;
+                }
+                else{
+                    DelFirst(ha,qa);FreeNode(qa);
+                }
+                DelFirst(hb,qb);FreeNode(qb);qb=NextPos(Pb,hb);
+                qa=NextPos(Pa,ha);break;
+            case 1:
+                DelFirst(hb,qb);InsFirst(ha,qb);
+                qb=NextPos(Pb,hb);ha=NextPos(Pa,ha);break;
+        }
+    }
+    if(!ListEmpty(Pb)) Append(Pa,qb);
+    Free(hb);
+}
