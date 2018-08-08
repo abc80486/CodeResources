@@ -9,7 +9,8 @@ int main(){
         scanf("%d",&a[(i+m)%n]);
     }
     for(int i=0;i<n;i++){
-        printf("%d ",a[i]);
+        if(i!=0) cout<<" ";
+        printf("%d",a[i]);
     }
     cout<<endl;
     return 0;

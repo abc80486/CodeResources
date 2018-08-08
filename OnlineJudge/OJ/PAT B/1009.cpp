@@ -16,7 +16,8 @@ int main(){
         if(ch=='\n') break;
     }
     for(int i=k-1;i>=0;i--){
-        printf("%s ",a[i]);
+        if(i!=k-1) cout<<" ";
+        printf("%s",a[i]);
     }
     cout<<endl;
     return 0;
