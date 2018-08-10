@@ -1,4 +1,4 @@
-#include<cstdio>
+#include<iostream>
 //sing namespace std;
 int main(){
     int n;
