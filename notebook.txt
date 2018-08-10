@@ -1,21 +1,18 @@
-	git push -u origin master
 	git remote add origin https://github.com/abc80486/CodeResources.git
-	git push origin master
 	git config --global user.name "xiangbin" 
 	git config --global user.email "abc80486@163.com"
 	git config --global credential.helper wincred
 	cd /c:/Users/3/Documents/Code/CodeResources
 	cd /Users/xiangbin/Repositories/CodeResources
-	git add .
-	git commit -m "surface3"
-	git push
-  	git status
 	cd /Users/xiangbin/Repositories/SecondaryFile
+git add .
+git commit -m "mac 8/10"
+git push origin mac:master
+git status
+
 git add .
 git commit -m "surface3 8/10"
 git push origin surface3:master
-
-git status
 
 	分支：
 	git branch  //本地分支
