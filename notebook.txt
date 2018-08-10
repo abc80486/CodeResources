@@ -8,7 +8,6 @@
 git add .
 git commit -m "mac 8/10"
 git push origin mac:master
-git status
 
 git add .
 git commit -m "surface3 8/10"
