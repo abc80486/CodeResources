@@ -1,0 +1,30 @@
+ADT Polynomoal{
+    数据对象：D={ai|ai<-TermSet,i=1,2,...,m,m>=0}
+             TermSet 中的每个元素包含一个表示系数的实数和表示指数的整数}
+    数据关系：R1={<a(i-1),a>|a(i-1),ai<-D,且a(i-1)中的指数值<ai中的指数值，i=2,...n}
+    基本操作：
+    CreatPolyn(&p,m)
+    DestroyPolyn(&p)
+    PrintPolyn(p)
+    PolynLength(p)
+    AddPolyn(&Pa,&Pb)
+    SubtractPolyn(&Pa,&Pb)
+    MultiplyPolyn(&Pa,&Pb)
+}ADT Polynomial
+Status LocateElem(LinkList L,ElemType e,Position &q,int (*compare)(ElemType,ElemType));
+Status OrderInsert(LinkList &L,ElemType e,int(*compare)(ElemType,ElemType));
+typedef struct{
+    float coef;
+    int expn;
+}term,ElemType;
+
+typedef LinkList polynomial;
+
+void CreatPolyn(polynomial &P,int m);
+void DestroyPolyn(polynomial &P);
+void PrintPolyn(polynomial P);
+int PolynLength(polynomial P);
+void AddPolyn(polynomial &Pa,polynomial &Pb);
+void SubtractPolyn(polynomial &Pa,polynomial &Pb);
+void MultiPolyn(polynomial &Pa,polynomial &Pb);
+

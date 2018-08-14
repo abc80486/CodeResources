@@ -1,0 +1,21 @@
+OperandType EvaluateExpression(){
+    InitStack(OPTR); Push(OPTR,'#');
+    InitStack(OPND); c=getchar();
+    while(c!='#'||GetTop(OPTR)!='#'){
+        if(!In(c,OP)){Push(OPND,c);c=getchar();}
+        swich(Precede(GetTop(OPTR),C)){
+            case'<':
+                Push(OPTR,c);c=getchar;
+                break;
+            case'=':
+                Pop(OPTR,X);c=getchar();
+                break;
+            case'>':
+                Pop(OPTR,theta);
+                Pop(OPND,b);Pop(OPND,a);
+                Push(OPND,Operate(a,theta,b));
+                break;
+        }
+    }
+    return GetTop(OPND);
+}
