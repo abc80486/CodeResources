@@ -12,7 +12,7 @@ git status
 
 git add .
 git commit -m "surface3 8/14"
-git push origin surface3:master
+git push
 git status
 	分支：
 	git branch  //本地分支
