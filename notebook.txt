@@ -6,14 +6,14 @@
 	cd /Users/xiangbin/Repositories/CodeResources
 	cd /Users/xiangbin/Repositories/SecondaryFile
 git add .
-git commit -m "mac 8/10"
+git commit -m "mac 8/15"
 git push origin mac:master
 git status
 
 git add .
-git commit -m "surface3 8/10"
-git push origin surface3:master
-
+git commit -m "surface3 8/14"
+git push
+git status
 	分支：
 	git branch  //本地分支
 	git branch -r  //远程分支
@@ -22,6 +22,7 @@ git push origin surface3:master
 	git checkout -b master //创建并切换分支
 	git branch -d master  (-D) //删除分支master
 	git merge master  //将分支master与当前分支合并
+	git pull origin master --allow-unrelated-histories
 	git push origin master  //创建远程分支
 	git push origin :heads/master  //删除远程分支master
 	git push origin test:master //提交本地分支到远程分支master
@@ -31,6 +32,7 @@ git push origin surface3:master
 	git branch --set-upstream-to origin/devtest devtest 
 	git branch -u origin/master master //关联分支
 	版本：
+	rm -rf .git   //强删.git
 	git tag 
 	git tag [name]
 	git tag -d [name]
