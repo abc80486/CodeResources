@@ -23,6 +23,7 @@ git status
 	git branch -d master  (-D) //删除分支master
 	git merge master  //将分支master与当前分支合并
 	git pull origin master --allow-unrelated-histories
+	// 允许不同版本传递；
 	git push origin master  //创建远程分支
 	git push origin :heads/master  //删除远程分支master
 	git push origin test:master //提交本地分支到远程分支master
