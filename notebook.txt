@@ -5,6 +5,7 @@
 	cd /c:/Users/3/Documents/Code/CodeResources
 	cd /Users/xiangbin/Repositories/CodeResources
 	cd /Users/xiangbin/Repositories/SecondaryFile
+	
 git add .
 git commit -m "mac 8/24"
 
