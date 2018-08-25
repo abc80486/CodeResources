@@ -8,11 +8,7 @@
 	
 git add .
 git commit -m "mac 8/25"
-<<<<<<< HEAD
 git push
-=======
-git push origin mac:master
->>>>>>> 4f48c09ef34d145217c68058d8759b2d82595cad
 git status
 
 git add .
