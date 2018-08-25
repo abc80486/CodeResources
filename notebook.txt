@@ -5,8 +5,9 @@
 	cd /c:/Users/3/Documents/Code/CodeResources
 	cd /Users/xiangbin/Repositories/CodeResources
 	cd /Users/xiangbin/Repositories/SecondaryFile
+	
 git add .
-git commit -m "mac 8/24"
+git commit -m "mac 8/25"
 git push origin mac:master
 git status
 
