@@ -5,9 +5,9 @@ int main(){
     int n;
     //cin<<n;
     scanf("%d",&n);
-    int a[n],b[n];
+    long long a[n],b[n];
     for(int i=0;i<n;i++) {
-        scanf("%d",&a[i]);
+        scanf("%ld",&a[i]);
         b[i]=a[i];
     }
     sort(a,a+n);
@@ -18,7 +18,7 @@ int main(){
     printf("%d\n",k);
     for(int i=0;i<k;i++){
         if(i!=0) printf(" ");
-        printf("%d",b[i]);
+        printf("%ld",b[i]);
     }
     return 0;
 }
