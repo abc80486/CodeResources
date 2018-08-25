@@ -6,12 +6,12 @@
 	cd /Users/xiangbin/Repositories/CodeResources
 	cd /Users/xiangbin/Repositories/SecondaryFile
 git add .
-git commit -m "mac 8/11"
+git commit -m "mac 8/24"
 git push origin mac:master
 git status
 
 git add .
-git commit -m "surface3 8/14"
+git commit -m "surface3 8/25"
 git push
 git status
 	分支：

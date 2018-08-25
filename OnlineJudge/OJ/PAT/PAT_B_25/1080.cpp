@@ -27,7 +27,7 @@ struct stuout{
             else return false;
         }
     }
-}
+};
 int main(){
     int p,m,n;
     scanf("%d%d%d",&p,&m,&n);
@@ -68,7 +68,7 @@ int main(){
                     tag=0;
                  }
                  gmit++;
-                 if(gmit>=gm.end()) break;
+                 if(gmit==gm.end()) break;
                  
             }
             if(tag==1){
@@ -82,13 +82,14 @@ int main(){
             }
         }
         gnit++;
-        if(gnit>=gn.end()) break;
+        if(gnit == gn.end()) break;
         }
         gpit++;
     }
-    for(set<struct student>::iterator it=gp.begin();it!=gp.end();it++){
+    for(set<struct stuout>::iterator it=g.begin();it!=g.end();it++){
         printf("%s\n",(*it).name);
     }
+
     return 0;
 }
 /*
