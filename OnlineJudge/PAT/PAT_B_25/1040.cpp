@@ -39,7 +39,7 @@ int main(){
     createat(a,t,at,an,tn);
     adjustat(at,an);
    createpa(p,a,pa,pn,an,at);
-   int sum=0;
+   long long sum=0;
     for(int i=0;i<pn;i++){
         sum+=pa[i];
     }

@@ -1,3 +1,4 @@
+//完美数列
 #include<iostream>
 #include<algorithm>
 using namespace std;
