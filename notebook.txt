@@ -7,7 +7,7 @@
 	cd /Users/xiangbin/Repositories/SecondaryFile
 	
 git add .
-git commit -m "mac 09/04"
+git commit -m "mac 09/05"
 git push
 git status
 
