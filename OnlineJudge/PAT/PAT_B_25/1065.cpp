@@ -8,7 +8,6 @@ const int N=100000+5;
 int main(){
     int n,a[N]={0},m;
     bool b[N]={false};
-   // ostream_iterator<int> output(cout," ");
     scanf("%d",&n);
     for(int i=0;i<n;i++){
         int boy,girl;
@@ -35,8 +34,6 @@ int main(){
         if(it!=t.begin()) printf(" ");
         printf("%d",*it);
     }
-    printf("\n");
-    //copy(t.begin(),t.end(),output);
     return 0;
 }
 /*
