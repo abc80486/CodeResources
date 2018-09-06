@@ -1,7 +1,7 @@
 //旧键盘
 //第一次出现toupper的使用
 #include<iostream>
-#include<ctype>
+#include<cctype>
 using namespace std;
 int main(){
     string s1,s2,ans;

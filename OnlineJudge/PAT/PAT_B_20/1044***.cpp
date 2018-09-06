@@ -1,4 +1,3 @@
-//火星数字
 #include<iostream>
 #include<string>
 using namespace std;
@@ -12,18 +11,20 @@ int main(){
         string s;
         getline(cin,s);
         int leng=s.length();
-        if(leng==1 && s[0]=='0') cout<<"tret"<<endl;
-        else{
+        if(leng==1 && s[0]=='0') {
+            cout<<"tret"<<endl;
+        }else{
             if(s[0]>='0'&&s[0]<='9'){
                 func1(s);
+            }else {
+                func2(s);
             }
-            else func2(s);
         }
     }
     return 0;
 }
 void func2(string s){
-    string a[13]={"###","jan","feb","mar","apr","may","jun","jly","aug","sep","act","nov","dec"};
+    string a[13]={"###","jan","feb","mar","apr","may","jun","jly","aug","sep","oct","nov","dec"};
     string b[13]={"###","tam", "hel", "maa", "huh", "tou", "kes", "hei", "elo", "syy", "lok", "mer", "jou"};
     int len=s.length();
     if(len==3){
@@ -46,21 +47,20 @@ void func2(string s){
                 t2=j;
             }
         }
-        cout<<t1*13+t2;
+        cout<<t1*13+t2<<endl;
     }
 }
 void func1(string s){
-    string a[13]={"###","jan","feb","mar","apr","may","jun","jly","aug","sep","act","nov","dec"};
+    string a[13]={"###","jan","feb","mar","apr","may","jun","jly","aug","sep","oct","nov","dec"};
     string b[13]={"###","tam", "hel", "maa", "huh", "tou", "kes", "hei", "elo", "syy", "lok", "mer", "jou"};
     int len=s.length();
     int t;
     if(len==1){
         t=s[0]-'0';
-    }
-    else if(len==2){
+    }else if(len==2){
         t=(s[0]-'0')*10+(s[1]-'0');
     }else{
-        t=(s[0]-'0')*100+(s[1]-'0')*10+s[2]-'0';
+        t=(s[0]-'0')*100+(s[1]-'0')*10+(s[2]-'0');
     }
     if(t<=12){
         cout<<a[t]<<endl;

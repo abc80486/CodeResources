@@ -1,6 +1,7 @@
 //有理数的四则运算；
 //个人认为这道理还是有点挑战性的
 #include<iostream>
+#include<cmath>
 using namespace std;
 long long a,b,c,d;
 long long gcd(long long t1,long long t2){
@@ -10,11 +11,11 @@ void func(long long m,long long n){
     int flag1=0,flag2=0,flag=0;
     if(n==0){
         printf("Inf");
-        return ;
+        return;
     }
     if(m==0){
         printf("0");
-        return ;
+        return;
     }
     if(m<0) flag1=1;
     if(n<0) flag2=1;
@@ -31,14 +32,17 @@ void func(long long m,long long n){
         if(flag==0) printf("%d",y);
         else printf("(-%d)",y);
         return;
-    }
-    else{
+    }else{
         long long t1=m-y*n,t2=n,t=gcd(t1,t2);
         t1=t1/t,t2=t2/t;
         if(flag==1){
             printf("(-");
-            if(y!=0) printf("%lld &lld/%lld)",y,t1,t2);
+            if(y!=0) printf("%lld %lld/%lld)",y,t1,t2);
+            else printf("%d/%d)",t1,t2);
+        }else{
+            if(y!=0) printf("%lld %lld/%lld",y,t1,t2);
             else printf("%lld/%lld",t1,t2);
+
         }
     }
 }

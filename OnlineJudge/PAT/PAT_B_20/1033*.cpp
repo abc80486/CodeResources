@@ -1,7 +1,7 @@
 //旧键盘打字
 //第一次了解getline输入字符串的好处和cin对比
 #include<iostream>
-#include<ctype>
+#include<cctype>
 using namespace std;
 int main(){
     string bad,should;

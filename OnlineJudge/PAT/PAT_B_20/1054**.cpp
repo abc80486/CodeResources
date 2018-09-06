@@ -28,7 +28,7 @@ int main(){
     if(cnt==1){
         printf("The average of 1 number is %.2lf",sum);
     }else if(cnt>1){
-        printf("The average of %d numbers is %.2lf",cnt,sum);
+        printf("The average of %d numbers is %.2lf",cnt,sum/cnt);
     }else{
         printf("The average of 0 numbers is Undefined");
     }
