@@ -1,7 +1,6 @@
 #include<iostream>
 #include<cmath>
 using namespace std;
-//const int N=100000;
 int main(){
     int k=0,m,n,p=0;
     cin>>m>>n;

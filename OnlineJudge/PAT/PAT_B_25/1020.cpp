@@ -16,7 +16,6 @@ int main(){
     for(int i=0;i<n;i++) cin>>a[i].sumprice;
     sort(a,a+n);
     double t=0.0;
-    //cout<<a[0].sumprice<<endl;
     for(int i=0;i<n;i++){
         if(sum>=a[i].quantity){
             t+=double(a[i].sumprice);sum-=a[i].quantity;

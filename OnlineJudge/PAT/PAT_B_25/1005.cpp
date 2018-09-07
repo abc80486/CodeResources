@@ -1,3 +1,5 @@
+
+/*
 #include<iostream>
 #include<algorithm>
 using namespace std;
@@ -38,5 +40,36 @@ int main(){
             }
     }
     cout<<endl;
+    return 0;
+}
+*/
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+int main(){
+    bool arr[10000]={false};
+    int n;
+    cin>>n;
+    vector<int> a(n);
+    for(int i=0;i<n;i++){
+        int temp;
+        cin>>temp;
+        a[i]=temp;
+        while(temp!=1){
+            if(temp%2!=0) temp=temp*3+1;
+            temp/=2;
+            if(arr[temp]==true) break;
+            arr[temp]=true;
+        }
+    }
+    int flag=0;
+    for(int i=0;i<n;i++){
+        if(arr[a[i]]==false){
+            if(flag==1) cout<<" ";
+            cout<<a[i];
+            flag=1;
+        }
+    }
     return 0;
 }
