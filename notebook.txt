@@ -32,7 +32,7 @@ git status
 	git branch -m abranch newbranch  //重名分支
 	git diff surface31  origin/master  //分支差异
 	git branch --set-upstream-to origin/devtest devtest 
-	git branch -u origin/master master //关联分支
+	git branch -u origin/master master //关联分支git 
 	版本：
 	rm -rf .git   //强删.git
 	git tag 
