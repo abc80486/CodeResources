@@ -1,0 +1,18 @@
+<form name="form1"method="post"action="">
+    <textarea name="oldString"cols="40"rows="4"></textarea>
+    <textarea name="newString" cols="40" rows="4"></textarea>
+    <input name="Button" type="button" class="btn_grey" onclick="trim()"value="去掉字符串的首尾空格">
+</form>
+<script language="javascript">
+    function trim(){
+        var str=form1.oldString.value;
+        if(str==""){
+            alert("请输入原字符串");form1.oldString.focus();return;
+        }
+        else{
+            var objExp=/(^\s*)|(\s*$)/g;
+            str=str.replace(objExp,"");
+        }
+        form1.newString.value=str;
+    }
+</script>
