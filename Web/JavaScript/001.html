@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>hello world!</title>
+    </head>
+    <body>
+        <div id="myajax">hello world</div>
+        <button type="button" id="ajaxBtn">通过ajax改变内容</button>
+        <script src="base.js"></script>
+    </body>
+</html>
+<script>
+(function(){
+    var ajaxBtn=eg.$("ajaxBtn");
+    eg.addListener(ajaxBtn,"click",function(){
+        eg.AJAX({TYPE:"GET",URL:"123.txt",ISASYN:true},function(data){
+            eg.$("myajax").innerHTML=data;
+            });
+    });
+})();
+</script>

@@ -1,0 +1,1378 @@
+*1* CSS 指层叠样式表（Cascading Style Sheets）。 在我们的 CSS 教程中，您将学习如何使用 CSS 同时控制整个站点的样式和布局。 
+    通过与 XHTML 结合，CSS 可以帮助我们实行表现与结构分离的开发模式
+*2* 
+    样式定义如何显示 HTML 元素
+    样式通常存储在样式表中
+    解决内容与表现分离的问题
+    多个样式定义可层叠为一
+    样式对网页中元素位置的排版进行像素级精确控制
+*3* 一般而言，所有的样式会根据下面的规则层叠于一个新的虚拟样式表中，其中数字 4 拥有最高的优先权。
+    浏览器缺省设置
+    外部样式表
+    内部样式表（位于 <head> 标签内部）
+    内联样式（在 HTML 元素内部）
+*4* CSS 规则由两个主要的部分构成：选择器，以及一条或多条声明:
+    selector {property:value,property:value}
+    选择器通常是您需要改变样式的 HTML 元素。
+    每条声明由一个属性和一个值组成。
+*5* id 选择器可以为标有特定 id 的 HTML 元素指定特定的样式。
+HTML元素以id属性来设置id选择器,CSS 中 id 选择器以 "#" 来定义。
+*6* class 选择器用于描述一组元素的样式，class 选择器有别于id选择器，class可以在多个元素中使用。
+class 选择器在HTML中以class属性表示, 在 CSS 中，类选择器以一个点"."号显示：
+*7* 按照选择器的优先级列出所有的css选择器对让我们知道在指定元素上哪个选择器是有效的是很有用的
+*8* 选择器
+1.基本选择器
+选择器	类型	功能描述
+*	 通配选择器 	选择文档中所有HTML元素
+E	 元素选择器	选择指定类型的HTML元素
+#id	 ID选择器	选择指定ID属性值为“id”的任意类型元素
+.class	 类选择器	选择指定class属性值为“class”的任意类型的任意多个元素
+selector1,selectorN	 群组选择器	将每一个选择器匹配的元素集合并
+
+2.层次选择器
+选择器	类型	功能描述
+E  F	后代选择器（包含选择器）	选择匹配的F元素，且匹配的F元素被包含在匹配的E元素内
+E>F	子选择器	选择匹配的F元素，且匹配的F元素所匹配的E元素的子元素
+E+F	相邻兄弟选择器	选择匹配的F元素，且匹配的F元素紧位于匹配的E元素的后面
+E~F	通用选择器	选择匹配的F元素，且位于匹配的E元素后的所有匹配的F元素
+
+3.动态伪类选择器
+选择器	类型	功能描述
+E:link	链接伪类选择器  	选择匹配的E元素，而且匹配元素被定义了超链接并未被访问过。常用于链接描点上
+E:visited  	链接伪类选择器	选择匹配的E元素，而且匹配元素被定义了超链接并已被访问过。常用于链接描点上
+E:active	用户行为选择器	选择匹配的E元素，且匹配元素被激活。常用于链接描点和按钮上
+E:hover	用户行为选择器	选择匹配的E元素，且用户鼠标停留在元素E上。IE6及以下浏览器仅支持a:hover
+E:focus	用户行为选择器	选择匹配的E元素，而且匹配元素获取焦点
+
+4.目标伪类选择器
+选择器	功能描述
+E:target	选择匹配E的所有元素，且匹配元素被相关URL指向
+
+5.UI元素状态伪类选择器
+选择器	类型	功能描述
+E:checked	选中状态伪类选择器	匹配选中的复选按钮或者单选按钮表单元素
+E:enabled	启用状态伪类选择器	匹配所有启用的表单元素
+E:disabled	不可用状态伪类选择器	匹配所有禁用的表单元素
+
+6.结构伪类选择器
+选择器	类型	功能描述
+E:first-child	作为父元素的第一个子元素的元素E。与E:nth-child(1)等同
+E:last-child	作为父元素的最后一个子元素的元素E。与E:nth-last-child(1)等同
+E:root	选择匹配元素E所在文档的根元素。在HTML文档中，根元素始终是html，此时该选择器与html类型选择器匹配的内容相同
+E F:nth-child(n)	选择父元素E的第n个子元素F。其中n可以是整数（1，2，3）、关键字（even，odd）、
+    可以是公式（2n+1）,而且n值起始值为1，而不是0.
+E F:nth-last-child(n)	选择父元素E的倒数第n个子元素F。此选择器与E:nth-child(n)选择器计算顺序刚好相反，
+    但使用方法都是一样的，其中：nth-last-child(1)始终匹配最后一个元素，与last-child等同
+E:nth-of-type(n)	选择父元素内具有指定类型的第n个E元素
+E:nth-last-of-type(n)	选择父元素内具有指定类型的倒数第n个E元素
+E:first-of-type	选择父元素内具有指定类型的第一个E元素，与E:nth-of-type(1)等同
+E:last-of-type	选择父元素内具有指定类型的最后一个E元素，与E:nth-last-of-type(1)等同
+E:only-child	选择父元素只包含一个子元素，且该子元素匹配E元素
+E:only-of-type	选择父元素只包含一个同类型子元素，且该子元素匹配E元素
+E:empty	选择没有子元素的元素，而且该元素也不包含任何文本节点
+
+7.否定伪类选择器
+选择器	功能描述
+E:not(F)	匹配所有除元素F外的E元素
+
+8.属性选择器
+选择器	功能描述
+[attribute]	用于选取带有指定属性的元素。
+[attribute=value]	用于选取带有指定属性和值的元素。
+[attribute~=value]	用于选取属性值中包含指定词汇的元素。
+[attribute|=value]	用于选取带有以指定值开头的属性值的元素，该值必须是整个单词。
+[attribute^=value]	匹配属性值以指定值开头的每个元素。
+[attribute$=value]	匹配属性值以指定值结尾的每个元素。
+[attribute*=value]	匹配属性值中包含指定值的每个元素。
+*9* 插入样式表的方法有三种:
+外部样式表 内部样式表 内联样式
+*10* 当样式需要应用于很多页面时，外部样式表将是理想的选择。在使用外部样式表的情况下，你可以通过改变一个文件来改变整个站点的外观。
+每个页面使用标签链接到样式表。 标签在（文档的）头部，外部样式表可以在任何文本编辑器中进行编辑。文件不能包含任何的 html 标签
+*11* 当单个文档需要特殊的样式时，就应该使用内部样式表；当样式仅需要在一个元素上应用一次时，
+使用内联样式
+*12* 当 !important 规则被应用在一个样式声明中时，该样式声明会覆盖CSS中任何其他的声明，无论它处在声明列表中的哪里。
+尽管如此，!important规则还是与优先级毫无关系
+*13* 一些经验法则：
+Always 要优化考虑使用样式规则的优先级来解决问题而不是 !important
+Only 只在需要覆盖全站或外部 css（例如引用的 ExtJs 或者 YUI ）的特定页面中使用 !important
+Never 永远不要在全站范围的 css 上使用 !important
+Never 永远不要在你的插件中使用 !important
+*14* CSS 背景属性
+Property	描述
+background	简写属性，作用是将背景属性设置在一个声明中。
+background-attachment	背景图像是否固定或者随着页面的其余部分滚动。
+background-color	设置元素的背景颜色。
+background-image	把图像设置为背景。
+background-position	设置背景图像的起始位置。
+background-repeat	设置背景图像是否及如何重复。
+*15* CSS z-index 属性
+值	描述
+auto	默认。堆叠顺序与父元素相等。
+number	设置元素的堆叠顺序。
+inherit	规定应该从父元素继承 z-index 属性的值。
+
+*16* CSS3 word-wrap 属性
+值	描述
+normal	只在允许的断字点换行（浏览器保持默认处理）。
+break-word	在长单词或 URL 地址内部进行换行。
+
+*17* CSS word-spacing 属性
+值	描述
+normal	默认。定义单词间的标准空间。
+length	定义单词间的固定空间。
+inherit	规定应该从父元素继承 word-spacing 属性的值。
+
+*18* CSS3 word-break 属性
+值	描述
+normal	使用浏览器默认的换行规则。
+break-all	允许在单词内换行。
+keep-all	只能在半角空格或连字符处换行。
+
+*19* CSS3 border-image-width 属性
+值	说明
+number	表示相应的border-width 的倍数
+%	边界图像区域的大小：横向偏移的宽度的面积，垂直偏移的高度的面积
+auto	如果指定了，宽度是相应的image slice的内在宽度或高度
+
+*20* CSS white-space 属性
+值	描述
+normal	默认。空白会被浏览器忽略。
+pre	空白会被浏览器保留。其行为方式类似 HTML 中的 <pre> 标签。
+nowrap	文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+pre-wrap	保留空白符序列，但是正常地进行换行。
+pre-line	合并空白符序列，但是保留换行符。
+inherit	规定应该从父元素继承 white-space 属性的值。
+
+*21* CSS width 属性
+值	描述
+auto	默认值。浏览器可计算出实际的宽度。
+length	使用 px、cm 等单位定义宽度。
+%	定义基于包含块（父元素）宽度的百分比宽度。
+inherit	规定应该从父元素继承 width 属性的值。
+
+*22* CSS visibility 属性
+值	描述
+visible	默认值。元素是可见的。
+hidden	元素是不可见的。
+collapse	当在表格元素中使用时，此值可删除一行或一列，但是它不会影响表格的布局。
+    被行或列占据的空间会留给其他内容使用。如果此值被用在其他的元素上，会呈现为 "hidden"。
+inherit	规定应该从父元素继承 visibility 属性的值。
+
+*23* CSS vertical-align 属性
+值	描述
+baseline	默认。元素放置在父元素的基线上。
+sub	垂直对齐文本的下标。
+super	垂直对齐文本的上标
+top	把元素的顶端与行中最高元素的顶端对齐
+text-top	把元素的顶端与父元素字体的顶端对齐
+middle	把此元素放置在父元素的中部。
+bottom	把元素的顶端与行中最低的元素的顶端对齐。
+text-bottom	把元素的底端与父元素字体的底端对齐。
+length	 
+%	使用 "line-height" 属性的百分比值来排列此元素。允许使用负值。
+inherit	规定应该从父元素继承 vertical-align 属性的值。
+
+*24* CSS unicode-bidi 属性
+值	描述	测试
+normal	默认。不使用附加的嵌入层面。	
+embed	创建一个附加的嵌入层面。	
+bidi-override	创建一个附加的嵌入层面。重新排序取决于 direction 属性。	
+initial	设置该属性为它的默认值。	
+inherit	从父元素继承该属性。	 
+
+*25* CSS3 transition-timing-function 属性
+值	描述
+linear	规定以相同速度开始至结束的过渡效果（等于 cubic-bezier(0,0,1,1)）。
+ease	规定慢速开始，然后变快，然后慢速结束的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）。
+ease-in	规定以慢速开始的过渡效果（等于 cubic-bezier(0.42,0,1,1)）。
+ease-out	规定以慢速结束的过渡效果（等于 cubic-bezier(0,0,0.58,1)）。
+ease-in-out	规定以慢速开始和结束的过渡效果（等于 cubic-bezier(0.42,0,0.58,1)）。
+cubic-bezier(n,n,n,n)	在 cubic-bezier 函数中定义自己的值。可能的值是 0 至 1 之间的数值。
+
+*26* CSS3 transition-property 属性
+值	描述
+none	没有属性会获得过渡效果。
+all	所有属性都将获得过渡效果。
+property	定义应用过渡效果的 CSS 属性名称列表，列表以逗号分隔。
+
+*27* CSS3 transition-duration 属性
+值	描述
+time  规定完成过渡效果需要花费的时间（以秒或毫秒计）。默认值是 0，意味着不会有效果。
+
+CSS3 transition-delay 属性
+值	描述
+time	规定在过渡效果开始之前需要等待的时间，以秒或毫秒计。
+
+CSS3 transition 属性
+值	描述
+transition-property	规定设置过渡效果的 CSS 属性的名称。
+transition-duration	规定完成过渡效果需要多少秒或毫秒。
+transition-timing-function	规定速度效果的速度曲线。
+transition-delay	定义过渡效果何时开始。
+
+CSS3 transform-style 属性
+flat	子元素将不保留其 3D 位置。
+preserve-3d	子元素将保留其 3D 位置。
+
+CSS3 transform-origin 属性
+值	描述
+x-axis	定义视图被置于 X 轴的何处。可能的值：
+        left center right length %
+y-axis	定义视图被置于 Y 轴的何处。可能的值：
+        top center bottom length %
+z-axis	定义视图被置于 Z 轴的何处。可能的值：length
+
+CSS3 transform 属性
+值	描述
+none	定义不进行转换。
+matrix(n,n,n,n,n,n)	定义 2D 转换，使用六个值的矩阵。
+matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n)	定义 3D 转换，使用 16 个值的 4x4 矩阵。
+translate(x,y)	定义 2D 转换。
+translate3d(x,y,z)	定义 3D 转换。
+translateX(x)	定义转换，只是用 X 轴的值。
+translateY(y)	定义转换，只是用 Y 轴的值。
+translateZ(z)	定义 3D 转换，只是用 Z 轴的值。
+scale(x[,y]?)	定义 2D 缩放转换。
+scale3d(x,y,z)	定义 3D 缩放转换。
+scaleX(x)	通过设置 X 轴的值来定义缩放转换。
+scaleY(y)	通过设置 Y 轴的值来定义缩放转换。
+scaleZ(z)	通过设置 Z 轴的值来定义 3D 缩放转换。
+rotate(angle)	定义 2D 旋转，在参数中规定角度。
+rotate3d(x,y,z,angle)	定义 3D 旋转。
+rotateX(angle)	定义沿着 X 轴的 3D 旋转。	 
+rotateY(angle)	定义沿着 Y 轴的 3D 旋转。
+rotateZ(angle)	定义沿着 Z 轴的 3D 旋转。
+skew(x-angle,y-angle)	定义沿着 X 和 Y 轴的 2D 倾斜转换。
+skewX(angle)	定义沿着 X 轴的 2D 倾斜转换。
+skewY(angle)	定义沿着 Y 轴的 2D 倾斜转换。
+perspective(n)	为 3D 转换元素定义透视视图。
+
+CSS top 属性
+值	描述
+auto	默认值。通过浏览器计算上边缘的位置。
+%	设置以包含元素的百分比计的上边位置。可使用负值。
+length	使用 px、cm 等单位设置元素的上边位置。可使用负值。
+inherit	规定应该从父元素继承 top 属性的值。
+
+CSS3 text-wrap 属性
+值	描述
+normal	只在允许的换行点进行换行。
+none	不换行。元素无法容纳的文本会溢出。
+unrestricted	在任意两个字符间换行。
+suppress	压缩元素中的换行。浏览器只在行中没有其他有效换行点时进行换行。
+
+CSS text-transform 属性
+值	描述
+none	默认。定义带有小写字母和大写字母的标准的文本。
+capitalize	文本中的每个单词以大写字母开头。
+uppercase	定义仅有大写字母。
+lowercase	定义无大写字母，仅有小写字母。
+inherit	规定应该从父元素继承 text-transform 属性的值。
+
+CSS3 text-shadow 属性
+值	描述
+h-shadow	必需。水平阴影的位置。允许负值。
+v-shadow	必需。垂直阴影的位置。允许负值。
+blur	可选。模糊的距离。
+color	可选。阴影的颜色。参阅 CSS 颜色值。	
+
+CSS3 text-overflow 属性
+值	描述
+clip	修剪文本。
+ellipsis	显示省略符号来代表被修剪的文本。
+string	使用给定的字符串来代表被修剪的文本。
+
+CSS3 text-outline 属性
+值	描述
+thickness	必需。轮廓的粗细。
+blur	可选。轮廓的模糊半径。
+color	必需。轮廓的颜色。
+
+CSS3 text-justify 属性
+值	描述
+auto	浏览器决定齐行算法。
+none	禁用齐行。
+inter-word	增加/减少单词间的间隔。
+inter-ideograph	用表意文本来排齐内容。
+inter-cluster	只对不包含内部单词间隔的内容（比如亚洲语系）进行排齐。
+distribute	类似报纸版面，除了在东亚语系中最后一行是不齐行的。
+kashida	通过拉伸字符来排齐内容。
+
+CSS text-indent 属性
+值	描述
+length	定义固定的缩进。默认值：0。
+%	定义基于父元素宽度的百分比的缩进。
+inherit	规定应该从父元素继承 text-indent 属性的值。
+
+CSS text-decoration-style 属性
+值	描述	测试
+solid	默认值。线条将显示为单线。	
+double	线条将显示为双线。	
+dotted	线条将显示为点状线。	
+dashed	线条将显示为虚线。	
+wavy	线条将显示为波浪线。	
+initial	设置该属性为它的默认值。请参阅 initial。	
+inherit	从父元素继承该属性。
+
+CSS text-decoration-line 属性
+值	描述	测试
+none	默认值。规定文本修饰没有线条。	
+underline	规定文本的下方将显示一条线。
+overline	规定文本的上方将显示一条线。	
+line-through	规定文本的中间将显示一条线。	
+initial	设置该属性为它的默认值。请参阅 initial。	
+inherit	从父元素继承该属性。
+
+CSS text-decoration-color 属性
+值	描述	测试
+color	规定文本修饰的颜色。	测试 »
+initial	设置该属性为它的默认值。请参阅 initial。	测试 »
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS text-decoration 属性
+值	描述
+none	默认。定义标准的文本。
+underline	定义文本下的一条线。
+overline	定义文本上的一条线。
+line-through	定义穿过文本下的一条线。
+blink	定义闪烁的文本。
+inherit	规定应该从父元素继承 text-decoration 属性的值。
+
+CSS text-align-last 属性
+值	描述	测试
+auto	默认值。最后一行被调整，并向左对齐。	测试 »
+left	最后一行向左对齐。	测试 »
+right	最后一行向右对齐。	测试 »
+center	最后一行居中对齐。	测试 »
+justify	最后一行被调整为两端对齐。	测试 »
+start	最后一行在行开头对齐（如果 text-direction 是从左到右，则向左对齐；如果 text-direction 是从右到左，则向右对齐）。	测试 »
+end	最后一行在行末尾对齐（如果 text-direction 是从左到右，则向右对齐；如果 text-direction 是从右到左，则向左对齐）。	测试 »
+initial	设置该属性为它的默认值。请参阅 initial。	测试 »
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS text-align 属性
+值	描述
+left	把文本排列到左边。默认值：由浏览器决定。
+right	把文本排列到右边。
+center	把文本排列到中间。
+justify	实现两端对齐文本效果。
+inherit	规定应该从父元素继承 text-align 属性的值。
+
+CSS3 target-position 属性
+值	描述
+above	在当前标签页/窗口之前放置新的目的地标签页/窗口。
+behind	在当前标签页/窗口之后放置新的目的地标签页/窗口。
+front	在所有其他标签页/窗口之前放置新的目的地标签页/窗口。
+back	在所有其他标签页/窗口之后放置新的目的地标签页/窗口。
+
+CSS3 target-new 属性
+值	描述
+window	在新窗口中打开超链接。
+tab	在已有窗口的新标签页中打开超链接。
+none	不创建新的目的地。
+
+CSS3 target-name 属性
+值	描述
+current	在链接所在的框架、标签页或窗口中打开超链接。
+root	在当前标签页或窗口中超链接。
+parent	在父框架中打开超链接。如果当前框架没有父框架，则将该值视作 root。
+new	创建新的目的地（参阅 target-new）。
+modal	在新的（暂时创建的）模态窗口中打开新窗口。
+name	在已有框架、窗口或标签页中打开链接。如果 name 目的地不存在，则用该名称创建新的目的地。
+
+CSS3 target 属性
+值	描述
+target-name	规定在何处打开超链接（target destination）。
+target-new	规定应该在新窗口或已有窗口的新标签页中打开超链接。
+target-position	规定在何处放置新的目的地链接。
+
+CSS table-layout 属性
+值	描述
+auto	默认。列宽度由单元格内容设定。
+fixed	列宽由表格宽度和列宽度设定。
+inherit	规定应该从父元素继承 table-layout 属性的值。
+
+CSS tab-size 属性
+值	描述	测试
+number	默认值是 8。规定每个制表符（tab）字符要显示的空格字符的数量。	测试 »
+length	规定制表符（tab）字符的长度。几乎所有的主流浏览器都不支持该属性值。	 
+initial	设置该属性为它的默认值。请参阅 initial。	测试 »
+inherit	从父元素继承该属性。请参阅 inherit。	 
+
+CSS3 rotation 属性
+值	描述
+angle	元素旋转角度。可能的值：0deg 到 360deg。
+
+CSS right 属性
+值	描述
+auto	默认值。通过浏览器计算右边缘的位置。
+%	设置以包含元素的百分比计的右边位置。可使用负值。
+length	使用 px、cm 等单位设置元素的右边位置。可使用负值。
+inherit	规定应该从父元素继承 right 属性的值。
+
+CSS3 resize 属性
+值	描述
+none	用户无法调整元素的尺寸。
+both	用户可调整元素的高度和宽度。
+horizontal	用户可调整元素的宽度。
+vertical	用户可调整元素的高度。
+
+CSS quotes 属性
+值	描述
+none	规定 "content" 属性的 "open-quote" 和 "close-quote" 的值不会产生任何引号。
+string string string string	定义要使用的引号。前两个值规定第一级引用嵌套，后两个值规定下一级引号嵌套。
+inherit	规定应该从父元素继承 quotes 属性的值。
+
+CSS3 punctuation-trim 属性
+值	说明
+none	请勿修剪打开或关闭标点符号
+start	在每一行的开头放置开头标点符号
+end	在每一行的末尾修剪结束标点符号
+allow-end	如果另有不适合之前的理由，修剪每行末尾的结束标点符号。
+adjacent	若以前相邻字符修剪开口punctuation是一个全形开口，中间或结束标点符号，或表意文字空间。
+    修剪结束标点符号，如果下一个相邻的字符是一个全形关闭或中间punctuation，或表意文字空间
+
+CSS position 属性
+值	描述
+absolute	生成绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位。
+            元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定。
+fixed	生成绝对定位的元素，相对于浏览器窗口进行定位。
+        元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定。
+relative	生成相对定位的元素，相对于其正常位置进行定位。
+        因此，"left:20" 会向元素的 LEFT 位置添加 20 像素。
+static	默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明）。
+inherit	规定应该从父元素继承 position 属性的值。
+
+CSS3 perspective-origin 属性
+值	描述
+x-axis	定义该视图在 x 轴上的位置。默认值：50%。
+        left center right length %
+y-axis	定义该视图在 y 轴上的位置。默认值：50%。
+        top center bottom length %
+
+CSS3 perspective 属性
+值	描述
+number	元素距离视图的距离，以像素计。
+none	默认值。与 0 相同。不设置透视。
+
+CSS page-break-inside 属性
+值	描述
+auto	默认。如果必要则在元素内部插入分页符。
+avoid	避免在元素内部插入分页符。
+inherit	规定应该从父元素继承 page-break-inside 属性的设置。
+
+CSS page-break-before 属性
+值	描述
+auto	默认值。如果必要则在元素前插入分页符。
+always	在元素前插入分页符。
+avoid	避免在元素前插入分页符。
+left	在元素之前足够的分页符，一直到一张空白的左页为止。
+right	在元素之前足够的分页符，一直到一张空白的右页为止。
+inherit	规定应该从父元素继承 page-break-before 属性的设置。
+
+CSS Page-break-after 属性
+值	描述
+auto	默认。如果必要则在元素后插入分页符。
+always	在元素后插入分页符。
+avoid	避免在元素后插入分页符。
+left	在元素之后足够的分页符，一直到一张空白的左页为止。
+right	在元素之后足够的分页符，一直到一张空白的右页为止。
+inherit	规定应该从父元素继承 page-break-after 属性的设置。
+
+CSS padding-top 属性
+值	描述
+length	规定以具体单位计的固定的上内边距值，比如像素、厘米等。默认值是 0px。
+%	定义基于父元素宽度的百分比上内边距。此值不会如预期的那样工作于所有的浏览器中。
+inherit	规定应该从父元素继承上内边距。
+
+CSS padding-right 属性
+值	描述
+length	规定以具体单位计的固定的右内边距值，比如像素、厘米等。默认值是 0px。
+%	定义基于父元素宽度的百分比右内边距。此值不会如预期地那样工作于所有的浏览器中。
+inherit	规定应该从父元素继承右内边距。
+
+CSS padding-left 属性
+值	描述
+length	规定以具体单位计的固定的左内边距值，比如像素、厘米等。默认值是 0px。
+%	定义基于父元素宽度的百分比左内边距。此值不会如预期地那样工作于所有的浏览器中。
+inherit	规定应该从父元素继承左内边距。
+
+CSS Padding-bottom 属性
+值	描述
+length	规定以具体单位计的固定的下内边距值，比如像素、厘米等。默认值是 0px。
+%	定义基于父元素宽度的百分比下内边距。此值不会如预期地那样工作于所有的浏览器中。
+inherit	规定应该从父元素继承下内边距。
+
+CSS padding 属性
+值	说明
+length	规定以具体单位计的填充值，比如像素、厘米等。默认值是 0px
+%	规定基于父元素的宽度的百分比的填充
+inherit	指定应该从父元素继承padding
+
+CSS3 overflow-y 属性
+值	描述	测试
+visible	不裁剪内容，可能会显示在内容框之外。	测试
+hidden	裁剪内容 - 不提供滚动机制。	测试
+scroll	裁剪内容 - 提供滚动机制。	测试
+auto	如果溢出框，则应该提供滚动机制。	测试
+no-display	如果内容不适合内容框，则删除整个框。	测试
+no-content	如果内容不适合内容框，则隐藏整个内容。	测试
+
+CSS3 overflow-x 属性
+值	描述	测试
+visible	不裁剪内容，可能会显示在内容框之外。	测试
+hidden	裁剪内容 - 不提供滚动机制。	测试
+scroll	裁剪内容 - 提供滚动机制。	测试
+auto	如果溢出框，则应该提供滚动机制。	测试
+no-display	如果内容不适合内容框，则删除整个框。	测试
+no-content	如果内容不适合内容框，则隐藏整个内容。	测试
+
+CSS overflow 属性
+值	描述
+visible	默认值。内容不会被修剪，会呈现在元素框之外。
+hidden	内容会被修剪，并且其余内容是不可见的。
+scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。
+auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。
+inherit	规定应该从父元素继承 overflow 属性的值。
+
+CSS Outline-width 属性
+值	描述
+thin	规定细轮廓。
+medium	默认。规定中等的轮廓。
+thick	规定粗的轮廓。
+length	允许您规定轮廓粗细的值。
+inherit	规定应该从父元素继承轮廓宽度的设置。
+
+CSS outline-style 属性
+值	描述
+none	默认。定义无轮廓。
+dotted	定义点状的轮廓。
+dashed	定义虚线轮廓。
+solid	定义实线轮廓。
+double	定义双线轮廓。双线的宽度等同于 outline-width 的值。
+groove	定义 3D 凹槽轮廓。此效果取决于 outline-color 值。
+ridge	定义 3D 凸槽轮廓。此效果取决于 outline-color 值。
+inset	定义 3D 凹边轮廓。此效果取决于 outline-color 值。
+outset	定义 3D 凸边轮廓。此效果取决于 outline-color 值。
+inherit	规定应该从父元素继承轮廓样式的设置。
+
+CSS3 outline-offset 属性
+值	描述
+length	轮廓与边框边缘的距离。
+inherit	规定应从父元素继承 outline-offset 属性的值。
+
+CSS outline-color 属性
+值	描述
+color	指定轮廓颜色。在CSS颜色值寻找颜色值的完整列表。
+invert	默认。执行颜色反转（逆向的颜色）。可使轮廓在不同的背景颜色中都是可见。
+inherit	规定应该从父元素继承轮廓颜色的设置。
+
+CSS outline 属性
+值	描述
+outline-color	规定边框的颜色。参阅：outline-color 中可能的值。
+outline-style	规定边框的样式。参阅：outline-style 中可能的值。
+outline-width	规定边框的宽度。参阅：outline-width 中可能的值。
+inherit	规定应该从父元素继承 outline 属性的设置。
+
+CSS order 属性
+值	描述
+number	默认值是 0。规定灵活项目的顺序。
+initial	设置该属性为它的默认值。请参阅 initial。
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS3 opacity 属性
+值	描述
+value	指定不透明度。从0.0（完全透明）到1.0（完全不透明）
+inherit	Opacity属性的值应该从父元素继承
+
+CSS3 nav-up 属性
+值	描述
+auto	浏览器决定导航到哪个元素。
+id	规定被导航元素的 id。
+target-name	规定被导航的目标框架。
+inherit	规定应从父元素继承 nav-up 属性的值。
+
+CSS3 nav-right 属性
+值	描述
+auto	浏览器决定导航到哪个元素。
+id	规定被导航元素的 id。
+target-name	规定被导航的目标框架。
+inherit	规定应从父元素继承 nav-right 属性的值。
+
+CSS3 nav-left 属性
+值	说明
+auto	浏览器将决定哪个元素导航
+id	指定导航到该元素的ID
+target-name	指定导航到目标帧
+inherit	指定nav-left属性的值，应该从父元素继承
+
+CSS3 nav-index 属性
+值	说明
+auto	浏览器指派的元素的Tab键顺序
+number	表示该元素的Tab键顺序。 1意味着首先
+inherit	指定nav- index属性的值应该从父元素继承
+
+CSS3 nav-down 属性
+值	说明
+auto	浏览器决定导航到哪个元素。
+id	规定被导航元素的 id。
+target-name	规定被导航的目标框架。
+inherit	规定应从父元素继承 nav-down 属性的值。
+
+CSS min-width 属性
+值	描述
+length	定义元素的最小宽度值。默认值：取决于浏览器。
+%	定义基于包含它的块级对象的百分比最小宽度。
+inherit	规定应该从父元素继承 min-width 属性的值。
+
+CSS Min-height 属性
+值	描述
+length	定义元素的最小高度。默认值是 0。
+%	定义基于包含它的块级对象的百分比最小高度。
+inherit	规定应该从父元素继承 min-height 属性的值。
+
+CSS3 @media查询
+值	描述
+all	用于所有设备
+print	用于打印机和打印预览
+screen	用于电脑屏幕，平板电脑，智能手机等。
+speech	应用于屏幕阅读器等发声设备
+aspect-ratio	定义输出设备中的页面可见区域宽度与高度的比率
+color	定义输出设备每一组彩色原件的个数。如果不是彩色设备，则值等于0
+color-index	定义在输出设备的彩色查询表中的条目数。如果没有使用彩色查询表，则值等于0
+device-aspect-ratio	定义输出设备的屏幕可见宽度与高度的比率。
+device-height	定义输出设备的屏幕可见高度。
+device-width	定义输出设备的屏幕可见宽度。
+grid	用来查询输出设备是否使用栅格或点阵。
+height	定义输出设备中的页面可见区域高度。
+max-aspect-ratio	定义输出设备的屏幕可见宽度与高度的最大比率。
+max-color	定义输出设备每一组彩色原件的最大个数。
+max-color-index	定义在输出设备的彩色查询表中的最大条目数。
+max-device-aspect-ratio	定义输出设备的屏幕可见宽度与高度的最大比率。
+max-device-height	定义输出设备的屏幕可见的最大高度。
+max-device-width	定义输出设备的屏幕最大可见宽度。
+max-height	定义输出设备中的页面最大可见区域高度。
+max-monochrome	定义在一个单色框架缓冲区中每像素包含的最大单色原件个数。
+max-resolution	定义设备的最大分辨率。
+max-width	定义输出设备中的页面最大可见区域宽度。
+min-aspect-ratio	定义输出设备中的页面可见区域宽度与高度的最小比率。
+min-color	定义输出设备每一组彩色原件的最小个数。
+min-color-index	定义在输出设备的彩色查询表中的最小条目数。
+min-device-aspect-ratio	定义输出设备的屏幕可见宽度与高度的最小比率。
+min-device-width	定义输出设备的屏幕最小可见宽度。
+min-device-height	定义输出设备的屏幕的最小可见高度。
+min-height	定义输出设备中的页面最小可见区域高度。
+min-monochrome	定义在一个单色框架缓冲区中每像素包含的最小单色原件个数
+min-resolution	定义设备的最小分辨率。
+min-width	定义输出设备中的页面最小可见区域宽度。
+monochrome	定义在一个单色框架缓冲区中每像素包含的单色原件个数。如果不是单色设备，则值等于0
+orientation	定义输出设备中的页面可见区域高度是否大于或等于宽度。
+resolution	定义设备的分辨率。如：96dpi, 300dpi, 118dpcm
+scan	定义电视类设备的扫描工序。
+width	定义输出设备中的页面可见区域宽度。
+
+CSS max-width 属性
+值	描述
+none	默认。定义对元素的最大宽度没有限制。
+length	定义元素的最大宽度值。
+%	定义基于包含它的块级对象的百分比最大宽度。
+inherit	规定应该从父元素继承 max-width 属性的值。
+
+CSS max-height 属性
+值	描述
+none	默认。定义对元素被允许的最大高度没有限制。
+length	定义元素的最大高度值。
+%	定义基于包含它的块级对象的百分比最大高度。
+inherit	规定应该从父元素继承 max-height 属性的值。
+
+CSS margin-top 属性
+值	描述
+auto	浏览器设置的上外边距。
+length	定义固定的上外边距。默认值是 0。
+%	定义基于父对象总高度的百分比上外边距。
+inherit	规定应该从父元素继承上外边距。
+
+CSS margin-right 属性
+值	描述
+auto	浏览器设置的右外边距。
+length	定义固定的右外边距。默认值是 0。
+%	定义基于父对象总高度的百分比右外边距。
+inherit	规定应该从父元素继承右外边距。
+
+CSS margin-left 属性
+值	描述
+auto	浏览器设置的左外边距。
+length	定义固定的左外边距。默认值是0。
+%	定义基于父对象总高度的百分比左外边距。
+inherit	规定应该从父元素继承左外边距。
+
+CSS margin-bottom 属性
+值	描述
+auto	浏览器计算下外边距。
+length	规定以具体单位计的下外边距值，比如像素、厘米等。默认值是 0px。
+%	规定基于父元素的宽度的百分比的下外边距。
+inherit	规定应该从父元素继承下外边距。
+
+CSS margin 属性
+值	描述
+auto	浏览器计算外边距。
+length	规定以具体单位计的外边距值，比如像素、厘米等。默认值是 0px。
+%	规定基于父元素的宽度的百分比的外边距。
+inherit	规定应该从父元素继承外边距。
+
+CSS list-style-type 属性
+值	描述
+none	无标记。
+disc	默认。标记是实心圆。
+circle	标记是空心圆。
+square	标记是实心方块。
+decimal	标记是数字。
+decimal-leading-zero	0开头的数字标记。(01, 02, 03, 等。)
+lower-roman	小写罗马数字(i, ii, iii, iv, v, 等。)
+upper-roman	大写罗马数字(I, II, III, IV, V, 等。)
+lower-alpha	小写英文字母The marker is lower-alpha (a, b, c, d, e, 等。)
+upper-alpha	大写英文字母The marker is upper-alpha (A, B, C, D, E, 等。)
+lower-greek	小写希腊字母(alpha, beta, gamma, 等。)
+lower-latin	小写拉丁字母(a, b, c, d, e, 等。)
+upper-latin	大写拉丁字母(A, B, C, D, E, 等。)
+hebrew	传统的希伯来编号方式
+armenian	传统的亚美尼亚编号方式
+georgian	传统的乔治亚编号方式(an, ban, gan, 等。)
+cjk-ideographic	简单的表意数字
+hiragana	标记是：a, i, u, e, o, ka, ki, 等。（日文片假名）
+katakana	标记是：A, I, U, E, O, KA, KI, 等。（日文片假名）
+hiragana-iroha	标记是：i, ro, ha, ni, ho, he, to, 等。（日文片假名）
+katakana-iroha	标记是：I, RO, HA, NI, HO, HE, TO, 等。（日文片假名）
+
+CSS list-style-position 属性
+值	描述
+inside	列表项目标记放置在文本以内，且环绕文本根据标记对齐。
+outside	默认值。保持标记位于文本的左侧。列表项目标记放置在文本以外，且环绕文本不根据标记对齐。
+inherit	规定应该从父元素继承 list-style-position 属性的值。
+
+CSS list-style-image 属性
+值	描述
+URL	图像的路径。
+none	默认。无图形被显示。
+inherit	规定应该从父元素继承 list-style-image 属性的值。
+
+CSS list-style 属性
+值	描述
+list-style-type	设置列表项标记的类型。参阅：list-style-type 中可能的值。
+list-style-position	设置在何处放置列表项标记。参阅：list-style-position 中可能的值。
+list-style-image	使用图像来替换列表项的标记。参阅：list-style-image 中可能的值。
+initial	将这个属性设置为默认值。参阅：initial 中可能的值。
+inherit	规定应该从父元素继承 list-style 属性的值。参阅：inherit 中可能的值。
+
+CSS line-height 属性
+值	描述
+normal	默认。设置合理的行间距。
+number	设置数字，此数字会与当前的字体尺寸相乘来设置行间距。
+length	设置固定的行间距。
+%	基于当前字体尺寸的百分比行间距。
+inherit	规定应该从父元素继承 line-height 属性的值。
+
+CSS letter-spacing 属性
+值	描述
+normal	默认。规定字符间没有额外的空间。
+length	定义字符间的固定空间（允许使用负值）。
+inherit	规定应该从父元素继承 letter-spacing 属性的值。
+
+CSS left 属性
+值	描述
+auto	默认值。通过浏览器计算左边缘的位置。
+%	设置以包含元素的百分比计的左边位置。可使用负值。
+length	使用 px、cm 等单位设置元素的左边位置。可使用负值。
+inherit	规定应该从父元素继承 left 属性的值。
+
+CSS3 @keyframes 规则
+值	描述
+animationname	必需。定义动画的名称。
+keyframes-selector	必需。动画时长的百分比。
+            合法的值：
+            0-100%
+            from（与 0% 相同）
+            to（与 100% 相同）
+css-styles	必需。一个或多个合法的 CSS 样式属性。
+
+CSS justify-content 属性
+值	描述	测试
+flex-start	默认值。项目位于容器的开头。	测试 »
+flex-end	项目位于容器的结尾。	测试 »
+center	项目位于容器的中心。	测试 »
+space-between	项目位于各行之间留有空白的容器内。	测试 »
+space-around	项目位于各行之前、之间、之后都留有空白的容器内。	测试 »
+initial	设置该属性为它的默认值。请参阅 initial。	测试 »
+inherit	从父元素继承该属性。请参阅 inherit。	 
+
+CSS3 icon 属性
+值	描述
+auto	使用由浏览器提供的默认通用图标。
+URL	引用列表中的一个或多个图标，列表用逗号分隔。
+inherit	规定应从元素继承 icon 属性的值。
+
+CSS 高度（height） 属性
+值	描述
+auto	默认。浏览器会计算出实际的高度。
+length	使用 px、cm 等单位定义高度。
+%	基于包含它的块级对象的百分比高度。
+inherit	规定应该从父元素继承 height 属性的值。
+
+CSS3 hanging-punctuation 属性
+值	描述
+none	不在文本整行的开头还是结尾的行框之外放置标签符号。
+first	标点附着在首行开始边缘之外。
+last	标点附着在首行结尾边缘之外。
+allow-end	
+force-end
+
+CSS3 grid-rows 属性
+值	描述
+length	参考包含块的网格。
+%	参考包含块的高度。
+none	
+inherit	
+
+CSS3 grid-columns 属性
+值	描述
+length	参考包含块的网格。
+%	参考包含块的宽度。
+none	
+inherit
+
+CSS font-weight 属性
+值	描述
+normal	默认值。定义标准的字符。
+bold	定义粗体字符。
+bolder	定义更粗的字符。
+lighter	定义更细的字符。
+        100200300400500600700800900
+        定义由粗到细的字符。400 等同于 normal，而 700 等同于 bold。
+inherit	规定应该从父元素继承字体的粗细。
+
+CSS font-variant 属性
+值	描述
+normal	默认值。浏览器会显示一个标准的字体。
+small-caps	浏览器会显示小型大写字母的字体。
+inherit	规定应该从父元素继承 font-variant 属性的值。
+
+CSS font-style 属性
+值	描述
+normal	默认值。浏览器显示一个标准的字体样式。
+italic	浏览器会显示一个斜体的字体样式。
+oblique	浏览器会显示一个倾斜的字体样式。
+inherit	规定应该从父元素继承字体样式。
+
+CSS font-stretch 属性
+值	描述
+normal	默认值。把缩放比例设置为标准。
+wider	把伸展比例设置为更进一步的伸展值
+narrower	把收缩比例设置为更进一步的收缩值
+    ultra-condensed
+    extra-condensed
+    condensed
+    semi-condensed
+    semi-expanded
+    expanded
+    extra-expanded
+    ultra-expanded
+    设置 font-family 的缩放比例。
+    "ultra-condensed" 是最宽的值，而 "ultra-expanded" 是最窄的值。
+
+CSS font-size-adjust 属性
+值	描述
+none	默认。如果此字体不可用，则不保持此字体的 x-height。
+number	
+定义字体的 aspect 值比率。
+可使用的公式：
+首选字体的字体尺寸 * （font-size-adjust 值 / 可用字体的 aspect 值）=可应用到可用字体的字体尺寸
+举例：
+如果 14px 的 Verdana（aspect 值是 0.58）不可用，但是某个可用的字体的 aspect 值是 0.46，
+那么替代字体的尺寸将是 14 * (0.58/0.46) = 17.65px。
+
+CSS font-size 属性
+值	描述
+xx-small
+x-small
+small
+medium
+large
+x-large
+xx-large
+    把字体的尺寸设置为不同的尺寸，从 xx-small 到 xx-large。
+默认值：medium。
+smaller	把 font-size 设置为比父元素更小的尺寸。
+larger	把 font-size 设置为比父元素更大的尺寸。
+length	把 font-size 设置为一个固定的值。
+%	把 font-size 设置为基于父元素的一个百分比值。
+inherit	规定应该从父元素继承字体尺寸。
+
+CSS font-family 属性
+值	描述
+    family-name
+    generic-family
+    用于某个元素的字体族名称或/及类族名称的一个优先表。
+    默认值：取决于浏览器。
+inherit	规定应该从父元素继承字体系列。
+
+CSS3 @font-face 规则
+
+CSS font 属性
+值	描述
+font-style	规定字体样式。参阅：font-style 中可能的值。
+font-variant	规定字体异体。参阅：font-variant 中可能的值。
+font-weight	规定字体粗细。参阅：font-weight 中可能的值。
+font-size/line-height	规定字体尺寸和行高。参阅：font-size 和 line-height 中可能的值。
+font-family	规定字体系列。参阅：font-family 中可能的值。
+caption	定义被标题控件（比如按钮、下拉列表等）使用的字体。
+icon	定义被图标标记使用的字体。
+menu	定义被下拉列表使用的字体。
+message-box	定义被对话框使用的字体。
+small-caption	caption 字体的小型版本。
+status-bar	定义被窗口状态栏使用的字体。
+
+CSS float 属性
+值	描述
+left	元素向左浮动。
+right	元素向右浮动。
+none	默认值。元素不浮动，并会显示在其在文本中出现的位置。
+inherit	规定应该从父元素继承 float 属性的值。
+
+CSS flex-wrap 属性
+值	描述
+nowrap	默认值。规定灵活的项目不拆行或不拆列。
+wrap	规定灵活的项目在必要的时候拆行或拆列。
+wrap-reverse	规定灵活的项目在必要的时候拆行或拆列，但是以相反的顺序。
+initial	设置该属性为它的默认值。请参阅 initial。
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS flex-shrink 属性
+值	描述
+number	一个数字，规定项目将相对于其他灵活的项目进行收缩的量。默认值是 0。
+initial	设置该属性为它的默认值。请参阅 initial。
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS flex-grow 属性
+值	描述
+number	一个数字，规定项目将相对于其他灵活的项目进行扩展的量。默认值是 0。
+initial	设置该属性为它的默认值。请参阅 initial。
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS flex-flow 属性
+值	描述
+flex-direction	可能的值：
+    row
+    row-reverse
+    column
+    column-reverse
+    initial
+    inherit
+    默认值是 "row"。
+    规定灵活项目的方向。
+flex-wrap	可能的值：
+    nowrap
+    wrap
+    wrap-reverse
+    initial
+    inherit
+    默认值是 "nowrap"。
+    规定灵活项目是否拆行或拆列。
+initial	设置该属性为它的默认值。请参阅 initial。
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS flex-direction 属性
+值	描述	实例
+row	默认值。灵活的项目将水平显示，正如一个行一样。	尝试一下 »
+row-reverse	与 row 相同，但是以相反的顺序。	尝试一下 »
+column	灵活的项目将垂直显示，正如一个列一样。	尝试一下 »
+column-reverse	与 column 相同，但是以相反的顺序。	尝试一下 »
+initial	设置该属性为它的默认值。请参阅 initial。	尝试一下 »
+inherit	从父元素继承该属性。请参阅 inherit。	 
+
+CSS flex-basis 属性
+值	描述
+number	一个长度单位或者一个百分比，规定灵活项目的初始长度。
+auto	默认值。长度等于灵活项目的长度。如果该项目未指定长度，则长度将根据内容决定。
+initial	设置该属性为它的默认值。请参阅 initial。
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS flex 属性
+值	描述
+flex-grow	一个数字，规定项目将相对于其他灵活的项目进行扩展的量。
+flex-shrink	一个数字，规定项目将相对于其他灵活的项目进行收缩的量。
+flex-basis	项目的长度。合法值："auto"、"inherit" 或一个后跟 "%"、"px"、"em" 或任何其他长度单位的数字。
+auto	与 1 1 auto 相同。
+none	与 0 0 auto 相同。
+initial	设置该属性为它的默认值，即为 0 1 auto。请参阅 initial。
+inherit	从父元素继承该属性。请参阅 inherit。
+
+CSS3 filter(滤镜) 属性
+CSS 语法
+filter: none | blur() | brightness() | contrast() | drop-shadow() | grayscale() | hue-rotate() | 
+invert() | opacity() | saturate() | sepia() | url();
+
+CSS Empty-cells 属性
+值	描述
+hide	不在空单元格周围绘制边框。
+show	在空单元格周围绘制边框。默认。
+inherit	规定应该从父元素继承 empty-cells 属性的值。
+
+CSS display 属性
+值	描述
+none	此元素不会被显示。
+block	此元素将显示为块级元素，此元素前后会带有换行符。
+inline	默认。此元素会被显示为内联元素，元素前后没有换行符。
+inline-block	行内块元素。（CSS2.1 新增的值）
+list-item	此元素会作为列表显示。
+run-in	此元素会根据上下文作为块级元素或内联元素显示。
+compact	CSS 中有值 compact，不过由于缺乏广泛支持，已经从 CSS2.1 中删除。
+marker	CSS 中有值 marker，不过由于缺乏广泛支持，已经从 CSS2.1 中删除。
+table	此元素会作为块级表格来显示（类似 <table>），表格前后带有换行符。
+inline-table	此元素会作为内联表格来显示（类似 <table>），表格前后没有换行符。
+table-row-group	此元素会作为一个或多个行的分组来显示（类似 <tbody>）。
+table-header-group	此元素会作为一个或多个行的分组来显示（类似 <thead>）。
+table-footer-group	此元素会作为一个或多个行的分组来显示（类似 <tfoot>）。
+table-row	此元素会作为一个表格行显示（类似 <tr>）。
+table-column-group	此元素会作为一个或多个列的分组来显示（类似 <colgroup>）。
+table-column	此元素会作为一个单元格列显示（类似 <col>）
+table-cell	此元素会作为一个表格单元格显示（类似 <td> 和 <th>）
+table-caption	此元素会作为一个表格标题显示（类似 <caption>）
+inherit	规定应该从父元素继承 display 属性的值。
+
+CSS direction 属性
+值	描述
+ltr	默认。文本方向从左到右。
+rtl	文本方向从右到左。
+inherit	规定应该从父元素继承 direction 属性的值。
+
+CSS cursor 属性
+值	描述
+url	
+需使用的自定义光标的 URL。
+注释：请在此列表的末端始终定义一种普通的光标，以防没有由 URL 定义的可用光标。
+default	默认光标（通常是一个箭头）
+auto	默认。浏览器设置的光标。
+crosshair	光标呈现为十字线。
+pointer	光标呈现为指示链接的指针（一只手）
+move	此光标指示某对象可被移动。
+e-resize	此光标指示矩形框的边缘可被向右（东）移动。
+ne-resize	此光标指示矩形框的边缘可被向上及向右移动（北/东）。
+nw-resize	此光标指示矩形框的边缘可被向上及向左移动（北/西）。
+n-resize	此光标指示矩形框的边缘可被向上（北）移动。
+se-resize	此光标指示矩形框的边缘可被向下及向右移动（南/东）。
+sw-resize	此光标指示矩形框的边缘可被向下及向左移动（南/西）。
+s-resize	此光标指示矩形框的边缘可被向下移动（北/西）。
+w-resize	此光标指示矩形框的边缘可被向左移动（西）。
+text	此光标指示文本。
+wait	此光标指示程序正忙（通常是一只表或沙漏）。
+help	此光标指示可用的帮助（通常是一个问号或一个气球）。
+
+CSS counter-reset 属性
+值	说明
+none	默认。不能对选择器的计数器进行重置
+id number	id 定义重置计数器的选择器、id 或 class。 number 可设置此选择器出现次数的计数器的值。可以是正数、零或负数。
+inherit	规定应该从父元素继承 counter-reset 属性的值
+
+CSS counter-increment 属性
+值	说明
+none	没有计数器将递增
+id number	id 定义将增加计数的选择器、id 或 class。number 定义增量。number 可以是正数、零或者负数。
+inherit	指定counter-increment属性的值，应该从父元素继承
+
+CSS content 属性
+值	说明
+none	设置Content，如果指定成Nothing
+normal	设置content，如果指定的话，正常，默认是"none"（该是nothing）
+counter	设定计数器内容
+attr(attribute)	设置Content作为选择器的属性之一。
+string	设置Content到你指定的文本
+open-quote	设置Content是开口引号
+close-quote	设置Content是闭合引号
+no-open-quote	如果指定，移除内容的开始引号
+no-close-quote	如果指定，移除内容的闭合引号
+url(url)	设置某种媒体（图像，声音，视频等内容）
+inherit	指定的content属性的值，应该从父元素继承
+
+CSS3 columns 属性
+值	描述
+column-width	列的宽度。
+column-count	列数
+
+CSS3 column-width 属性
+值	描述	测试
+auto	由浏览器决定列宽。	测试
+length	规定列的宽度。	测试
+
+CSS3 column-span 属性
+值	描述	测试
+1	元素应横跨一列。	测试
+all	元素应横跨所有列。
+
+CSS3 column-rule-width 属性
+值	说明
+thin	指定一个细边框的规则
+medium	定义一个中等边框规则
+thick	指定一个粗边框的规则
+length	指定宽度的规则
+
+CSS3 column-rule-style 属性
+值	描述
+none	定义没有规则。
+hidden	定义隐藏规则。
+dotted	定义点状规则。
+dashed	定义虚线规则。
+solid	定义实线规则。
+double	定义双线规则。
+groove	定义 3D grooved 规则。该效果取决于宽度和颜色值。
+ridge	定义 3D ridged 规则。该效果取决于宽度和颜色值。
+inset	定义 3D inset 规则。该效果取决于宽度和颜色值。
+outset	定义 3D outset 规则。该效果取决于宽度和颜色值。
+
+CSS3 column-rule-color 属性
+值	描述	测试
+color	指定颜色的规则。在CSS颜色值寻找颜色值的完整列表
+
+CSS3 column-rule 属性
+值	说明
+column-rule-width	设置列中之间的宽度规则
+column-rule-style	设置列中之间的样式规则
+column-rule-color	设置列中之间的颜色规则
+
+CSS3 column-gap 属性
+值	描述	测试
+length	把列间的间隔设置为指定的长度。	测试
+normal	规定列间间隔为一个常规的间隔。W3C 建议的值是 1em。
+
+CSS3 column-fill 属性
+值	描述
+balance	对列进行协调。浏览器应对列长度的差异进行最小化处理。
+auto	按顺序对列进行填充，列长度会各有不同。
+
+CSS3 column-count 属性
+值	描述	测试
+number	元素内容将被划分的最佳列数。	测试
+auto	由其他属性决定列数，比如 "column-width"。	测试
+
+CSS color 属性
+值	描述
+color_name	规定颜色值为颜色名称的颜色（比如 red）。
+hex_number	规定颜色值为十六进制值的颜色（比如 #ff0000）。
+rgb_number	规定颜色值为 rgb 代码的颜色（比如 rgb(255,0,0)）。
+inherit	规定应该从父元素继承颜色。
+
+CSS clip 属性
+值	描述
+shape	设置元素的形状。唯一合法的形状值是：rect (top, right, bottom, left)
+auto	默认值。不应用任何剪裁。
+inherit	规定应该从父元素继承 clip 属性的值。
+
+CSS clear 属性
+值	描述
+left	在左侧不允许浮动元素。
+right	在右侧不允许浮动元素。
+both	在左右两侧均不允许浮动元素。
+none	默认值。允许浮动元素出现在两侧。
+inherit	规定应该从父元素继承 clear 属性的值。
+
+CSS caption-side 属性
+值	描述
+top	默认值。把表格标题定位在表格之上。
+bottom	把表格标题定位在表格之下。
+inherit	规定应该从父元素继承 caption-side 属性的值。
+
+CSS3 box-sizing 属性
+值	描述
+content-box	
+    这是由 CSS2.1 规定的宽度高度行为。
+    宽度和高度分别应用到元素的内容框。
+    在宽度和高度之外绘制元素的内边距和边框。
+border-box	
+    为元素设定的宽度和高度决定了元素的边框盒。
+    就是说，为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制。
+    通过从已设定的宽度和高度分别减去边框和内边距才能得到内容的宽度和高度。
+inherit	规定应从父元素继承 box-sizing 属性的值。
+
+CSS3 box-shadow 属性
+值	描述	测试
+h-shadow	必需。水平阴影的位置。允许负值。	测试
+v-shadow	必需。垂直阴影的位置。允许负值。	测试
+blur	可选。模糊距离。	测试
+spread	可选。阴影的尺寸。	测试
+color	可选。阴影的颜色。请参阅 CSS 颜色值。	测试
+inset	可选。将外部阴影 (outset) 改为内部阴影。	测试
+
+CSS3 box-pack 属性
+值	说明
+start	对于普通方向的boxes，左边缘的第一个子元素被放置在左侧（所有额外的空间放置后的最后一个子元素）。
+    对于反向boxes，右边缘最后一个子元素放置在右侧（所有额外的空间放置前的第一个子元素）
+end	对于正常的方向的boxes，最后一个子元素的右边缘放置在右侧（所有额外的空间放置前的第一个子元素）。
+    对于反向boxes，第一个孩子的左边缘放置在左侧（所有额外的空间放置后的最后一个子元素）
+center	额外的空间划分均匀的两半，前一半放置第一个子元素，另一半放置最后一个子元素
+justify	额外的空间平均分配给每个子元素
+
+CSS3 box-orient 属性
+值	说明
+horizontal	指定子元素在一个水平线上从左至右排列
+vertical	从顶部向底部垂直布置子元素
+inline-axis	子元素沿着内联坐标轴（映射到横向）
+block-axis	子元素沿着块坐标轴（映射到垂直）
+inherit	box-orient 属性的值应该从父元素继承
+
+CSS3 box-ordinal-group 属性
+值	描述	测试
+integer	一个整数，指示子元素的显示次序。	测试
+
+CSS3 box-lines 属性
+值	描述
+single	所有子元素会被放置在单独的行或列中。（无法匹配的元素会被视为溢出）。
+multiple	允许框扩展为多行，以容纳其所有子元素。
+
+CSS3 box-flex-group 属性
+值	描述
+integer	一个整数。（第一个柔性分组是 1，后面的柔性分组是更大的值）。
+
+CSS3 box-flex 属性
+值	描述
+value	元素的可伸缩行。柔性是相对的，例如 box-flex 为 2 的子元素两倍于 box-flex 为 1 的子元素。
+
+CSS3 box-direction 属性
+值	描述	测试
+normal	以默认方向显示子元素。	测试
+reverse	以反方向显示子元素。	测试
+inherit	应该从子元素继承 box-direction 属性的值	 
+
+CSS3 box-align 属性
+值	描述	测试
+start	
+    对于正常方向的框，每个子元素的上边缘沿着框的顶边放置。
+    对于反方向的框，每个子元素的下边缘沿着框的底边放置。
+end	
+    对于正常方向的框，每个子元素的下边缘沿着框的底边放置。
+    对于反方向的框，每个子元素的上边缘沿着框的顶边放置。
+center	均等地分割多余的空间，一半位于子元素之上，另一半位于子元素之下。	测试
+baseline	如果 box-orient 是inline-axis或horizontal，所有子元素均与其基线对齐。	测试
+stretch	拉伸子元素以填充包含块	 
+
+CSS bottom 属性
+值	描述
+auto	默认值。通过浏览器计算底部的位置。
+%	设置以包含元素的百分比计的底边位置。可使用负值。
+length	使用 px、cm 等单位设置元素的底边位置。可使用负值。
+inherit	规定应该从父元素继承 bottom 属性的值。
+
+CSS border-width 属性
+值	描述
+thin	定义细的边框。
+medium	默认。定义中等的边框。
+thick	定义粗的边框。
+length	允许您自定义边框的宽度。
+inherit	规定应该从父元素继承边框宽度。
+
+CSS border-top-width 属性
+值	描述
+thin	定义细的上边框。
+medium	默认值。定义中等的上边框。
+thick	定义粗的上边框。
+length	允许您自定义上边框的宽度。
+inherit	规定应该从父元素继承边框宽度。
+
+CSS border-top-style 属性
+值	描述
+none	定义无边框。
+hidden	与 "none" 相同。不过应用于表时除外，对于表，hidden 用于解决边框冲突。
+dotted	定义点状边框。在大多数浏览器中呈现为实线。
+dashed	定义虚线。在大多数浏览器中呈现为实线。
+solid	定义实线。
+double	定义双线。双线的宽度等于 border-width 的值。
+groove	定义 3D 凹槽边框。其效果取决于 border-color 的值。
+ridge	定义 3D 垄状边框。其效果取决于 border-color 的值。
+inset	定义 3D inset 边框。其效果取决于 border-color 的值。
+outset	定义 3D outset 边框。其效果取决于 border-color 的值。
+inherit	规定应该从父元素继承边框样式。
+ 
+ CSS3 border-top-right-radius 属性
+ 值	描述
+length	定义右上角的形状。
+%	使用%定义右上角的形状。
+
+CSS3 border-top-left-radius 属性
+值	描述
+length	定义左上角的形状。
+%	使用%定义左上角的形状。
+
+CSS border-top-color 属性
+值	描述
+color_name	规定颜色值为颜色名称的边框颜色（比如 red）。
+hex_number	规定颜色值为十六进制值的边框颜色（比如 #ff0000）。
+rgb_number	规定颜色值为 rgb 代码的边框颜色（比如 rgb(255,0,0)）。
+transparent	默认值。边框颜色为透明。
+inherit	规定应该从父元素继承边框颜色。
+
+CSS border-top 属性
+值	描述
+border-top-width	规定上边框的宽度。参阅：border-top-width 中可能的值。
+border-top-style	规定上边框的样式。参阅：border-top-style 中可能的值。
+border-top-color	规定上边框的颜色。参阅：border-top-color 中可能的值。
+inherit	规定应该从父元素继承 border-top 属性的设置。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

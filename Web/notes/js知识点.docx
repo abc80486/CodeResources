@@ -1,0 +1,123 @@
+1.网页三要素是什么
+HTML(内容)
+CSS(外观)
+Javascript(行为)
+
+2.JavaScript是什么
+JavaScript一门解释型(不是编译型)脚本语言,它的主要特点有:面向对象,弱类型,动态,基于原型的面向对象(对象)(不基于类)
+
+3.讲下js的数据类型
+基本类型: 数值(number),字符串(string),布尔值(boolean),undefined
+对象类型: 对象(Object)，数组(Array)，函数(Function)
+
+4.用什么方法来判断一个对象的数据类型,怎么样去判断数组
+typeof判断对象类型,用instanceOf判断是不是数组
+
+
+5.分别讲下小括号,中括号,大括号,冒号在js中的作用
+1). 小括号: ()用来定义或调用一个函数
+2). 中括号运算符: [ ]用来创建一个数组/获取数组元素
+3). 大括号运算符: { }用来创建一个对象
+4). 冒号运算符: 冒号用来分隔对象的属性名和属性值
+
+6.讲下函数的三种定义:
+1.function name(){}
+2. var name=function(){}
+3. var name=new Function("n","m","n+m")
+
+
+7.函数的形参和实参是否可以不一样,如果不一样,通过什么调用
+可以不一样,每个函数里面都有个arguments数组类型的变量,可以拿到实参的个数
+
+8.说几个系统预定义函数
+parseInt() / parseFloat() : 将一个字符串转为数字
+isNaN() : 判断是否不是一个数值或者数值类型字符串
+encodeURI() / decodeURI(): 对字符串进行编码与解码
+eval() : 将JS代码格式的字符串当作js执行
+setInterval(callback,m)间隔多久执行一次callback函数
+
+9.讲下变量的作用域
+如果在函数里面用var声明,就是局部变量,如果在函数里面不用var声明,那就是全局变量,在函数外面用var定义都是全局变量
+
+10.数组有哪两种声明方式
+1.直接用[]里面包含数据声明
+2.用new Array声明
+
+
+11.数组用什么去访问
+用下标来访问 arr[index]
+
+
+12.怎么样删除数组对象
+用 delete arra[0];
+
+
+13.对象是怎么样定义的,属性是怎么定义的
+可以用function定义一个对象,然后根据形参在里面this.x=x可以定义属性,或者可以通过动态的添加一个属性
+
+
+14.对象是怎么样创建的?
+1.用var obj={}就可以创建一个对象 2.用new Object()也可以创建一个对象
+
+
+15.怎么样给一个对象动态添加属性或者方法
+
+直接在对象上面用obj.属性="test",或 obj.方法名=function(){}定义一个方法
+
+
+16.js里面的全局对象是什么,怎么调用的
+
+js里面的全局对象是window,在js里面直接调用的函数都是window对象里面的函数,
+默认的this也指向window,默认全局对象的属性和方法不用前面加window,可以直接调用
+
+
+17.讲几个常见的js内置对象,他们有什么好处
+
+Object,Array,String,Number,Boolean,Date,Function
+可以方便的使用一些方法和常量,譬如String里面就有很多字符串函数 Date可以处理时间
+
+
+19.prototype(原型)是什么,它是怎么使用的
+
+每个函数都有一个prototype属性, 它是一个引用变量, 默认指向一个空Object对象 ,有备用的意思,
+当调用一个对象的函数或者属性的时候,如果在当前对象里面找不到,那么就到原型里面去找
+
+
+20.js是怎么样实现继承的?
+
+使用prototype属性就可以实现继承 一般是child.prototype=new parent()就可以实现
+
+
+21 什么是DOM,DOM分为那三种
+
+DOM= Document Object Model，文档对象模型， DOM 是 W3C（万维网联盟）的标准。DOM 定义了访问 HTML 和 XML 文档的标准：独立于平台和语言的接口. W3C DOM 标准被分为 3 个不同的部分：
+ 核心 DOM - 针对任何结构化文档的标准模型
+ XML DOM - 针对 XML 文档的标准模型
+ HTML DOM - 针对 HTML 文档的标准模型
+
+
+22.DOM中有几种类型的节点
+
+整个文档是一个文档节点(Document)
+每个 HTML 标签是一个元素节点(Element)
+每一个 HTML 属性是一个属性节点(Attribute)
+包含在 HTML 元素中的文本是文本节点(Text)
+
+23.讲下DOM对象的三种查询方式
+
+getElementById()根据元素id来查找 ,getElementsByTagName(tag):根据元素的tag名字来查找 
+getElementsByName(name) 根据元素名字来查找
+
+24.怎么样创建元素节点和文本节点,怎么样删除节点
+
+createElement("div")创建元素节点,createTextNode()创建一个文本节点,removeChild()可以用来删除节点
+
+
+25.用那个属性可以快速的给一个节点加一段html内容
+innerHTML
+
+26.如果我在js里面访问在js下面的html的tag,用什么技术实现
+
+默认js都是解释性语言,js不能访问后面定义的html元素的,但在window里面有个onload函数,把代码写在下面
+函数体里面就可以 window.onload=function(){}
+
