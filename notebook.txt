@@ -41,3 +41,4 @@ git status
 	git tag -r
 	git push origin :refs/tags/[name]
 	.gitignore  //文件包含不上传的文件或者文件夹
+	<!--https://raw.githubusercontent.com/abc80486/CodeResources/master/sources/image/web/javascript/pictureshow/001.jpeg
