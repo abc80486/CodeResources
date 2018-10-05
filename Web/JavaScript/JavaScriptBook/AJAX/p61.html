@@ -1,19 +1,20 @@
 <html>
     <head>
+        
         <title>hello ajax xml</title>
     </head>
     <body>
         <div id="myajax">hello world</div>
         <button type="button" id="ajaxBtn">通过ajax获取xml内容</button>
-        <script src="base.js"></script>
+        <script src="base.js" ></script>
     </body>
 </html>
-<script>
+<script >
     (function(){
         var ajaxBtn=eg.$("ajaxBtn");
         eg.addListener(ajaxBtn,"click",function(){
-            eg.AJAX({TYPE:"GET",URL:"p55.jsons",ISASYN:true},function(txt,xml){
-               // var root=xml.getElementsByTagName("name");
+            eg.AJAX({TYPE:"GET",URL:"p55.json",ISASYN:true},function(txt,xml){
+                //var root=xml.getElementsByTagName("name");
                 //eg.$("myajax").innerHTML=root[0].childNodes[0].nodeValue;
                 var json=new Function("return "+txt)();
                 eg.$("myajax").innerHTML=json.name;

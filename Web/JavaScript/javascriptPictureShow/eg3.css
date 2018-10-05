@@ -5,6 +5,12 @@ ul,li{
     width:620px;
     margin:10px 0;
 }
+#smallPhotosList{
+    margin:0 auto;
+    width:580px;
+    float:left;
+    padding:0;
+}
 #smallPhotosList li{
     float:left;
     margin-left:10px;

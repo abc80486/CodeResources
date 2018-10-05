@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>AJAX检查用户名</title>
+    </head>
+    <body>
+        用户名：<input type="text" id="username"/>
+        <span id="usernameTip"></span>
+        <script src="base.js"></script>
+
+    </body>
+</html>
+<script>
+    (function(){
+        var userName=eg.$("username");
+        var delay;
+        var delay2ajax=function(){
+            eg.AJAX({TYPE:"GET",URL:"p67.asp?username="+userName.value,ISASYN:true},function(data){
+                var json=new Function("return "+data)();
+                var tip="";
+                if(json.success){
+                    tip="用户名可以注册";
+                }
+                else{
+                    tip="用户名已存在";
+                }
+                eg.$("usernameTip").innerHTML=tip;
+            });
+        };
+        eg.addListener(userName,"keyup",function(){
+            clearTimeout(delay);
+            delay=setTimeout(delay2ajax,800);
+        });
+    })();
+</script>
