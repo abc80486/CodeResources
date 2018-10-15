@@ -4,17 +4,17 @@
 #include<cstring>
 #include<vector>
 using namespace std;
-
+//全局变量：Tree maxn n,vis[],dfs(),r,w[],sum[],tree[]
 struct Tree {
   double L, R; // distance from the root to the leftmost/rightmost point
-  Tree():L(0),R(0) {}
+  Tree():L(0),R(0) {}//结构体构造函数
 };
 
 const int maxn = 6;
 
-int n, vis[1<<maxn];
-double r, w[maxn], sum[1<<maxn];
-vector<Tree> tree[1<<maxn];
+int n, vis[1<<maxn];//vis的大小为128
+double r, w[maxn], sum[1<<maxn];//w[6],sum[128]
+vector<Tree> tree[1<<maxn];//tree[128]容器；
 
 void dfs(int subset) {
   if(vis[subset]) return;
@@ -41,18 +41,18 @@ void dfs(int subset) {
 
   if(!have_children) tree[subset].push_back(Tree());
 }
-
-int main() {
+ 
+int main() {//程序入口
   int T;
-  scanf("%d", &T);
-  while(T--) {
-    scanf("%lf%d", &r, &n);
-    for(int i = 0; i < n; i++) scanf("%lf", &w[i]);
-    for(int i = 0; i < (1<<n); i++) {
-      sum[i] = 0;
-      tree[i].clear();
-      for(int j = 0; j < n; j++)
-        if(i & (1<<j)) sum[i] += w[j];
+  scanf("%d", &T);//输入变量
+  while(T--) {//循环
+    scanf("%lf%d", &r, &n);//输入r,n；
+    for(int i = 0; i < n; i++) scanf("%lf", &w[i]);//输入n个数，存在w[i]中；
+    for(int i = 0; i < (1<<n); i++) {//循环2^n次方
+      sum[i] = 0;//sum[i]初始化；
+      tree[i].clear();//tree[i]初始化；
+      for(int j = 0; j < n; j++)//循环n次
+        if(i & (1<<j)) sum[i] += w[j];//如果i与2^j次方按位与不为0，将w[j]累加到sum[i]；
     }
 
     int root = (1<<n)-1;
