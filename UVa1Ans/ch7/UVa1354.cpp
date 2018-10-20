@@ -28,7 +28,8 @@ void dfs(int subset) {
     double d1 = sum[right] / sum[subset];
     double d2 = sum[left] / sum[subset];
 
-    dfs(left); dfs(right);
+    dfs(left); 
+    dfs(right);
 
     for(int i = 0; i < tree[left].size(); i++)
       for(int j = 0; j < tree[right].size(); j++) {
@@ -55,14 +56,14 @@ int main() {//程序入口
         if(i & (1<<j)) sum[i] += w[j];//如果i与2^j次方按位与不为0，将w[j]累加到sum[i]；
     }
 
-    int root = (1<<n)-1;
-    memset(vis, 0, sizeof(vis));
-    dfs(root);
+    int root = (1<<n)-1;//root=2^n-1;
+    memset(vis, 0, sizeof(vis));//初始化vis
+    dfs(root);//深度优先搜索；
 
-    double ans = -1;
+    double ans = -1;//结果
     for(int i = 0; i < tree[root].size(); i++)
-      ans = max(ans, tree[root][i].L + tree[root][i].R);
-    printf("%.10lf\n", ans);
+      ans = max(ans, tree[root][i].L + tree[root][i].R);//取最大值
+    printf("%.10lf\n", ans);//输出；
   }
   return 0;
 }
