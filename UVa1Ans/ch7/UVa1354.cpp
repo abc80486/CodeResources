@@ -16,21 +16,22 @@ int n, vis[1<<maxn];//vis的大小为128
 double r, w[maxn], sum[1<<maxn];//w[6],sum[128]
 vector<Tree> tree[1<<maxn];//tree[128]容器；
 
-void dfs(int subset) {
-  if(vis[subset]) return;
-  vis[subset] = true;
+void dfs(int subset) {//深度优先搜索
+  if(vis[subset]) return;//如果该值为1，返回；
+  vis[subset] = true;//设该值为1；
 
-  bool have_children = false;
+  bool have_children = false;//局部变量
   for(int left = (subset-1)&subset; left; left = (left-1)&subset) {
-    have_children = true;
+    //subset-1后与本身逻辑与，left为0循环结束；left的下一个值为left-1与subset逻辑与；
+    have_children = true;//设置have_children为真；
 
-    int right = subset^left;
-    double d1 = sum[right] / sum[subset];
-    double d2 = sum[left] / sum[subset];
+    int right = subset^left;//局部变量为subset异或
+    double d1 = sum[right] / sum[subset];//d1为
+    double d2 = sum[left] / sum[subset]; 9
 
     dfs(left); 
     dfs(right);
-
+    
     for(int i = 0; i < tree[left].size(); i++)
       for(int j = 0; j < tree[right].size(); j++) {
         Tree t;

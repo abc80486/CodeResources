@@ -5,10 +5,10 @@
 #include<queue>
 using namespace std;
 
-struct Node {
-  int v[3], dist;
-  bool operator < (const Node& rhs) const {
-    return dist > rhs.dist;
+struct Node {//定义节点
+  int v[3], dist;//一个大小为3的数组，一个变量
+  bool operator < (const Node& rhs) const {//重载运算符
+    return dist > rhs.dist;//节点按照重小到大排序
   }
 };
 
@@ -25,8 +25,7 @@ void update_ans(const Node& u) {
 void solve(int a, int b, int c, int d) {
   cap[0] = a; cap[1] = b; cap[2] = c;
   memset(ans, -1, sizeof(ans));
-  memset(mark, 0, sizeof(mark));
-  memset(dist, -1, sizeof(dist));
+  memset(mark, 0, sizeof(mark)); memset(dist, -1, sizeof(dist));
   priority_queue<Node> q;
 
   Node start;
